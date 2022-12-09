@@ -51,7 +51,7 @@ All Admin Routes List
 Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     // Dashboard
     Route::get('/admin/dashboard', function () {
-        return Inertia::render('Admin/Home');
+        return Inertia::render('Admin/Index');
     })->name('admin-dashboard');
 });
 
