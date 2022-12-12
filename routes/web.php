@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Course;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -50,9 +52,19 @@ All Admin Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     // Dashboard
-    Route::get('/admin/dashboard', function () {
-        return Inertia::render('Admin/Index');
+    Route::get('/admin', function () {
+        $courses = Course::all();
+        return Inertia::render('Admin/Index', ['courses' => $courses]);
     })->name('admin-dashboard');
+
+    Route::controller(CourseController::class)->group(function () {
+        Route::get('/admin/course', 'adminIndex')->name('admin-course');
+        Route::get('/admin/course/add', 'create')->name('admin-course-add');
+        Route::post('/admin/course/add', 'store')->name('admin-course-post');
+        Route::get('/admin/course/{id}', 'edit')->name('admin-course-edit');
+        Route::put('/admin/course/{id}', 'update')->name('admin-course-update');
+        Route::delete('/admin/course/{id}', 'destroy')->name('admin-course-delete');
+    });
 });
 
 /*------------------------------------------

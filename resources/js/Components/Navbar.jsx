@@ -91,8 +91,12 @@ const Navbar = ({ auth, handleDarkMode }) => {
                                     </div>
                                 ) : (
                                     <div>
-                                        <NavLink href={"#"}>Login</NavLink>
-                                        <NavLink href={"#"}>Register</NavLink>
+                                        <NavLink href={route("login")}>
+                                            Login
+                                        </NavLink>
+                                        <NavLink href={route("register")}>
+                                            Register
+                                        </NavLink>
                                     </div>
                                 )}
                             </div>

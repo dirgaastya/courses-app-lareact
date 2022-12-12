@@ -14,7 +14,13 @@ class Course extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'name',
-        'mentor_name'
+        'mentor_name',
+        'period_id'
     ];
+
+    //
+
+
 }

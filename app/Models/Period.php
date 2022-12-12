@@ -11,4 +11,12 @@ class Period extends Model
     protected $table = 'periods';
     protected $primaryKey = 'id';
     public $incrementing = false;
+
+    protected $fillable = [
+        'id',
+        'name',
+        'time_start',
+        'time_end',
+        'cost',
+    ];
 }

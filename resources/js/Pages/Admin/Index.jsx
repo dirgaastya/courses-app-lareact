@@ -1,20 +1,32 @@
 import { Routes, Route } from "react-router-dom";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Home from "@/Pages/Admin/Home";
-import Form from "@/Pages/Admin/Form";
+import Form from "@/Pages/Admin/Form/Form";
+import Course from "@/Pages/Admin/Course/Course";
+import AddCourse from "@/Pages/Admin/Course/AddCourse";
+import EditCourse from "@/Pages/Admin/Course/EditCourse";
+import { usePage } from "@inertiajs/inertia-react";
 
 const Index = (props) => {
+    const { courses } = usePage().props;
     return (
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
                 <Routes>
+                    <Route path="admin/" element={<Home {...props} />} />
+                    <Route path="admin/form" element={<Form {...props} />} />
                     <Route
-                        path="admin/dashboard"
-                        element={<Home {...props} />}
+                        path="admin/course"
+                        element={<Course {...props} data={courses} />}
+                    />
+
+                    <Route
+                        path="admin/course/add"
+                        element={<AddCourse {...props} />}
                     />
                     <Route
-                        path="admin/dashboard/form"
-                        element={<Form {...props} />}
+                        path="admin/course/:id"
+                        element={<EditCourse {...props} />}
                     />
                 </Routes>
             </AuthenticatedLayout>

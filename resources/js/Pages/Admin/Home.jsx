@@ -1,7 +1,5 @@
 import Card from "@/Components/Dashboard/Card";
 import RecentListCard from "@/Components/Dashboard/RecenListCard";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/inertia-react";
 
 export default function Dashboard(props) {
     return (
