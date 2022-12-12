@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdDelete, MdModeEdit, MdAdminPanelSettings } from "react-icons/md";
 import Dropdown from "@/Components/Dropdown";
+import Pagination from "@/Components/Pagination";
 
 const Course = (props) => {
     const courses = props.data;
+    const { from, to, total, next, prev } = props;
     const [courseList, setCourseList] = useState([]);
     const [filterPeriod, setFilterPeriod] = useState("");
     const [orderId, setOrderId] = useState("dsc");
@@ -218,99 +220,117 @@ const Course = (props) => {
                     </Link>
                 </div>
                 {loading ? (
-                    <h1 className="text-3xl">Loading...</h1>
+                    <div className="flex w-full justify-center items-center gap-x-3">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-blue-500 to-sky   -300 animate-spin">
+                            <div class="h-6 w-6 rounded-full bg-gray-100"></div>
+                        </div>
+                        <span className="animate-bounce font-semibold">
+                            Loading...
+                        </span>
+                    </div>
                 ) : (
-                    <table className="w-full px-3 md:px-8 md:rounded-md md:shadow-md text-left md:overflow-hidden overflow-x-auto bg-white">
-                        <thead>
-                            <tr className="text-gray-600">
-                                <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                    ID
-                                </th>
-                                <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                    Name
-                                </th>
-                                <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 hidden md:table-cell">
-                                    Mentor
-                                </th>
-                                <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                    Period
-                                </th>
-                                <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="text-gray-600 dark:text-gray-100">
-                            {courseList !== undefined ? (
-                                courseList.map((course, index) => (
-                                    <tr key={`course-${index}`}>
+                    <div className="w-full">
+                        <table className="w-full px-3 md:px-8 md:rounded-md md:shadow-md text-left md:overflow-hidden overflow-x-auto bg-white">
+                            <thead>
+                                <tr className="text-gray-600">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                        ID
+                                    </th>
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                        Name
+                                    </th>
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 hidden md:table-cell">
+                                        Mentor
+                                    </th>
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                        Period
+                                    </th>
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-600 dark:text-gray-100">
+                                {courseList !== undefined ? (
+                                    courseList.map((course, index) => (
+                                        <tr key={`course-${index}`}>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <p className="dark:text-gray-100">
+                                                    {course.id}
+                                                </p>
+                                            </td>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <p className="dark:text-gray-100">
+                                                    {course.name}
+                                                </p>
+                                            </td>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
+                                                <p className="dark:text-gray-100">
+                                                    {course.mentor_name}
+                                                </p>
+                                            </td>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
+                                                {course.period_id}
+                                            </td>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <div className="flex flex-col md:flex-row items-center gap-2">
+                                                    <Link
+                                                        to={`/admin/course/${course.id}`}
+                                                        className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-400 hover:bg-cyan-500 transition ease-linear duration-300"
+                                                    >
+                                                        <MdModeEdit />
+                                                    </Link>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                course.id
+                                                            )
+                                                        }
+                                                        className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 transition ease-linear duration-300"
+                                                    >
+                                                        <MdDelete />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
                                         <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                             <p className="dark:text-gray-100">
-                                                {course.id}
+                                                No data available
                                             </p>
                                         </td>
                                         <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                             <p className="dark:text-gray-100">
-                                                {course.name}
+                                                No data available
                                             </p>
                                         </td>
                                         <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
                                             <p className="dark:text-gray-100">
-                                                {course.mentor_name}
+                                                No data available
                                             </p>
                                         </td>
                                         <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                            {course.period_id}
+                                            No data available
                                         </td>
                                         <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                             <div className="flex flex-col md:flex-row items-center gap-2">
-                                                <Link
-                                                    to={`/admin/course/${course.id}`}
-                                                    className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-400 hover:bg-cyan-500 transition ease-linear duration-300"
-                                                >
-                                                    <MdModeEdit />
-                                                </Link>
-                                                <button
-                                                    onClick={() =>
-                                                        handleDelete(course.id)
-                                                    }
-                                                    className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 transition ease-linear duration-300"
-                                                >
-                                                    <MdDelete />
-                                                </button>
+                                                <p>No data available</p>
                                             </div>
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                                        <p className="dark:text-gray-100">
-                                            No data available
-                                        </p>
-                                    </td>
-                                    <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                                        <p className="dark:text-gray-100">
-                                            No data available
-                                        </p>
-                                    </td>
-                                    <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
-                                        <p className="dark:text-gray-100">
-                                            No data available
-                                        </p>
-                                    </td>
-                                    <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                        No data available
-                                    </td>
-                                    <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                                        <div className="flex flex-col md:flex-row items-center gap-2">
-                                            <p>No data available</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                        <Pagination
+                            from={from}
+                            to={to}
+                            next={next}
+                            prev={prev}
+                            total={total}
+                        />
+                    </div>
                 )}
             </div>
         </div>

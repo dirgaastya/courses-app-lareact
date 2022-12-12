@@ -21,7 +21,7 @@ class CourseController extends Controller
 
     public function adminIndex()
     {
-        $courses = Course::all();
+        $courses = Course::latest()->paginate(10);
         return Inertia::render('Admin/Index', ['courses' => $courses]);
     }
 

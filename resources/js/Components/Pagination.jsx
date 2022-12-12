@@ -1,54 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link } from "@inertiajs/inertia-react";
 
-const Pagination = ({ links }) => {
-    function getClassName(active) {
-        return active
-            ? "inline-flex mr-2 items-center h-8 w-8 justify-center  text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none py-0 bg-blue-300"
-            : "inline-flex mr-2 items-center h-8 w-8 justify-center text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none py-0";
+const Pagination = ({ from, to, total, next, prev }) => {
+    function getLinkIndex(url) {
+        const reg = url.match(/=/i);
+        return url[reg.index + 1];
     }
-
     return (
-        <>
-            {links.length > 3 && (
-                <div className="ml-auto text-gray-500 text-xs sm:inline-flex hidden items-center">
-                    <span className="mr-3">Page 2 of 4</span>
-                    {links.map((link, key) =>
-                        link.url == null ? (
-                            <button className="inline-flex mr-2 items-center h-8 w-8 justify-center text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none py-0">
-                                <svg
-                                    className="w-4"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                            </button>
-                        ) : (
-                            <Link
-                                to={`?page=${link.label}`}
-                                className={getClassName(link.active)}
-                            >
-                                <svg
-                                    className="w-4"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </Link>
-                        )
-                    )}
-                </div>
-            )}
-        </>
+        <div className="w-full my-4 flex justify-between items-center">
+            <p className="text-sm font-thin">
+                Showing <span className="font-semibold">{from}</span> to{" "}
+                <span className="font-semibold">{to}</span> of{" "}
+                <span className="font-semibold">{total}</span> results
+            </p>
+            <div className="flex gap-x-2">
+                {prev !== null ? (
+                    <Link
+                        href={`?page=${getLinkIndex(prev)}`}
+                        className="text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 hover:bg-gray-300/80 transition ease-linear duration-300"
+                    >
+                        Prev
+                    </Link>
+                ) : (
+                    <p className="cursor-not-allowed text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
+                        Prev
+                    </p>
+                )}
+
+                {next !== null ? (
+                    <Link
+                        href={`?page=${getLinkIndex(next)}`}
+                        className="text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 hover:bg-gray-300/80 transition ease-linear duration-300"
+                    >
+                        Next
+                    </Link>
+                ) : (
+                    <p className="cursor-not-allowed text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
+                        Next
+                    </p>
+                )}
+            </div>
+        </div>
     );
 };
 

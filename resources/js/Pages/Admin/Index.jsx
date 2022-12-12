@@ -9,6 +9,7 @@ import { usePage } from "@inertiajs/inertia-react";
 
 const Index = (props) => {
     const { courses } = usePage().props;
+    console.log(courses);
     return (
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
@@ -17,7 +18,17 @@ const Index = (props) => {
                     <Route path="admin/form" element={<Form {...props} />} />
                     <Route
                         path="admin/course"
-                        element={<Course {...props} data={courses} />}
+                        element={
+                            <Course
+                                {...props}
+                                data={courses.data}
+                                from={courses.from}
+                                to={courses.to}
+                                next={courses.next_page_url}
+                                prev={courses.prev_page_url}
+                                total={courses.total}
+                            />
+                        }
                     />
 
                     <Route

@@ -53,7 +53,7 @@ All Admin Routes List
 Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     // Dashboard
     Route::get('/admin', function () {
-        $courses = Course::all();
+        $courses = Course::latest()->paginate(10);
         return Inertia::render('Admin/Index', ['courses' => $courses]);
     })->name('admin-dashboard');
 
