@@ -9,7 +9,6 @@ import { usePage } from "@inertiajs/inertia-react";
 
 const Index = (props) => {
     const { courses } = usePage().props;
-    console.log(courses);
     return (
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
