@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Course;
 use App\Models\Period;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
-class PeriodController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,23 +18,9 @@ class PeriodController extends Controller
      */
     public function index()
     {
-        return Inertia::render('/User/Period');
-    }
-
-    public function adminIndex()
-    {
+        $courses = Course::latest()->paginate(10);
         $periods = Period::latest()->paginate(10);
-        return Inertia::render('Admin/Index', ['periods' => $periods]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return Inertia::render('Admin/Index');
+        return Inertia::render('Admin/Index', ['courses' => $courses, 'periods' => $periods]);
     }
 
     /**
@@ -40,11 +29,33 @@ class PeriodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeCourse(Request $request)
     {
+        $config = [
+            'table' => 'courses',
+            'length' => 8,
+            'prefix' => date('ym')
+        ];
+
+        $id = IdGenerator::generate($config);
 
 
+        $request->validate([
+            'name' => 'required',
+            'mentor_name' => 'required',
+            'period_id' => 'required'
+        ]);
 
+        $courses = new Course();
+        $courses->id = $id;
+        $courses->name = $request->name;
+        $courses->mentor_name = $request->mentor_name;
+        $courses->period_id = $request->period_id;
+        $courses->save();
+    }
+
+    public function storePeriod(Request $request)
+    {
         $request->validate([
             'id' => 'required',
             'name' => 'required',
@@ -63,34 +74,24 @@ class PeriodController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Period $post)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateCourse(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'mentor_name' => 'required',
+            'period_id' => 'required'
+        ]);
+
+        Course::find($id)->update($request->all());
+    }
+
+    public function updatePeriod(Request $request, $id)
     {
         $request->validate([
             'id' => 'required',
@@ -109,7 +110,12 @@ class PeriodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyCourse($id)
+    {
+        Course::find($id)->delete();
+    }
+
+    public function destroyPeriod($id)
     {
         Period::find($id)->delete();
     }
