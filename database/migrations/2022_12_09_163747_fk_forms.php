@@ -30,7 +30,7 @@ return new class extends Migration
     {
         Schema::table('forms', function (Blueprint $table) {
             $table->dropForeign('fk_forms_user_id');
-            $table->dropColumn('no_user');
+            $table->dropColumn('user_id');
             $table->dropForeign('fk_forms_period_id');
             $table->dropColumn('period_id');
         });
