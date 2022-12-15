@@ -49,13 +49,13 @@ const Navbar = ({ auth, handleDarkMode }) => {
                                             >
                                                 Dashboard
                                             </NavLink>
-                                            <NavLink
+                                            <Link
                                                 method="post"
                                                 href={route("logout")}
                                                 as="button"
                                             >
                                                 Log Out
-                                            </NavLink>
+                                            </Link>
                                         </div>
                                         <button
                                             onClick={() => {
