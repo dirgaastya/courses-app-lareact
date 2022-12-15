@@ -1,23 +1,26 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@inertiajs/inertia-react";
-import { usePage } from "@inertiajs/inertia-react";
+import { useEffect } from "react";
 const EditCourse = (props) => {
-    const { courses } = usePage().props;
     const { id } = useParams();
     const navigate = useNavigate();
-    const course = courses.filter((course) => course.id === id);
-    const { data, setData, errors, put } = useForm({
+    const course = props.data.filter((course) => course.id === id);
+    const { data, setData, errors, put, wasSuccessful } = useForm({
         name: course[0].name || "",
         mentor_name: course[0].mentor_name || "",
         period_id: course[0].period_id || "",
     });
 
-    function handleSubmit(e) {
+    useEffect(() => {
+        if (wasSuccessful) {
+            navigate("/admin/course");
+        }
+    }, [wasSuccessful]);
+
+    async function handleSubmit(e) {
         e.preventDefault();
         put(route("admin-course-update", course[0].id));
-        navigate("/admin/course");
     }
-    console.log(course);
     return (
         <div>
             <div className="py-4 mb-5 flex items-center justify-between">

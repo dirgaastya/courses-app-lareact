@@ -40,7 +40,7 @@ const Index = (props) => {
                     />
                     <Route
                         path="admin/course/:id"
-                        element={<EditCourse {...props} />}
+                        element={<EditCourse {...props} data={courses.data} />}
                     />
 
                     {/* Period */}
