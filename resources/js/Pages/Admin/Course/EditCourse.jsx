@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@inertiajs/inertia-react";
 import { usePage } from "@inertiajs/inertia-react";
-const AddCourse = (props) => {
+const EditCourse = (props) => {
     const { courses } = usePage().props;
     const { id } = useParams();
     const navigate = useNavigate();
@@ -123,4 +123,4 @@ const AddCourse = (props) => {
     );
 };
 
-export default AddCourse;
+export default EditCourse;

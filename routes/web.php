@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ProfileController;
-use App\Models\Course;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Course;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
+use App\Models\Period;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +56,8 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     // Dashboard
     Route::get('/admin', function () {
         $courses = Course::latest()->paginate(10);
-        return Inertia::render('Admin/Index', ['courses' => $courses]);
+        $periods = Period::latest()->paginate(10);
+        return Inertia::render('Admin/Index', ['courses' => $courses, 'periods' => $periods]);
     })->name('admin-dashboard');
 
     Route::controller(CourseController::class)->group(function () {
@@ -64,6 +67,15 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
         Route::get('/admin/course/{id}', 'edit')->name('admin-course-edit');
         Route::put('/admin/course/{id}', 'update')->name('admin-course-update');
         Route::delete('/admin/course/{id}', 'destroy')->name('admin-course-delete');
+    });
+
+    Route::controller(PeriodController::class)->group(function () {
+        Route::get('/admin/period', 'adminIndex')->name('admin-period');
+        Route::get('/admin/period/add', 'create')->name('admin-period-add');
+        Route::post('/admin/period/add', 'store')->name('admin-period-post');
+        Route::get('/admin/period/{id}', 'edit')->name('admin-period-edit');
+        Route::put('/admin/period/{id}', 'update')->name('admin-period-update');
+        Route::delete('/admin/period/{id}', 'destroy')->name('admin-period-delete');
     });
 });
 

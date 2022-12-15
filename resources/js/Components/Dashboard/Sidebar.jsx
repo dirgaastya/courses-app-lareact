@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineHome, AiOutlineRead, AiOutlineUser } from "react-icons/ai";
+import {
+    AiOutlineHome,
+    AiOutlineRead,
+    AiOutlineClockCircle,
+    AiOutlineUser,
+} from "react-icons/ai";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 
 const Sidebar = ({ auth }) => {
@@ -55,6 +60,18 @@ const Sidebar = ({ auth }) => {
                         </Link>
                     </li>
 
+                    <li
+                        className="lg:mt-3 px-2 hover:text-blue-600 dark-hover:text-blue-300
+				rounded-lg"
+                    >
+                        <Link
+                            to="/admin/period"
+                            className=" flex gap-x-2 lg:flex-col items-center"
+                        >
+                            <AiOutlineClockCircle className="h-5 w-5" />
+                            <span className="text-xs lg:mt-2">Period</span>
+                        </Link>
+                    </li>
                     <li
                         className="lg:mt-3 px-2 hover:text-blue-600 dark-hover:text-blue-300
 				rounded-lg"

@@ -9,8 +9,6 @@ const AddCourse = (props) => {
         period_id: "FY01",
     });
 
-    const [isError, setIsError] = useState("");
-
     useEffect(() => {
         if (wasSuccessful) {
             navigate("/admin/course");
@@ -20,8 +18,6 @@ const AddCourse = (props) => {
     async function handleSubmit(e) {
         e.preventDefault();
         post(route("admin-course-add"));
-
-        console.log(wa);
     }
     return (
         <div>
