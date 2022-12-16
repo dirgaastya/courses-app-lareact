@@ -7,9 +7,8 @@ import { Link } from "@inertiajs/inertia-react";
 const Navbar = ({ auth, handleDarkMode }) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-    const [isLogin, setIsLogin] = useState(auth.user);
+    const isLogin = auth.user;
     const [darkMode, setDarkMode] = useState(true);
-
     return (
         <div className="">
             <nav className="bg-white dark:bg-gray-900 dark:text-white border-b border-gray-600">
@@ -41,7 +40,8 @@ const Navbar = ({ auth, handleDarkMode }) => {
                                             <NavLink
                                                 href={route(
                                                     `${
-                                                        auth.role === "user"
+                                                        auth.user.role ===
+                                                        "user"
                                                             ? "dashboard"
                                                             : "admin-dashboard"
                                                     }`
