@@ -1,13 +1,12 @@
 import { Routes, Route } from "react-router-dom";
+import { usePage } from "@inertiajs/inertia-react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Home from "@/Pages/Admin/Home";
-import Form from "@/Pages/Admin/Form/Form";
 import Course from "@/Pages/Admin/Course/Course";
 import AddCourse from "@/Pages/Admin/Course/AddCourse";
 import EditCourse from "@/Pages/Admin/Course/EditCourse";
 import Period from "@/Pages/Admin/Period/Period";
 import AddPeriod from "@/Pages/Admin/Period/AddPeriod";
-import { usePage } from "@inertiajs/inertia-react";
 import EditPeriod from "@/Pages/Admin/Period/EditPeriod";
 
 const Index = (props) => {
@@ -17,7 +16,6 @@ const Index = (props) => {
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
                 <Routes>
                     <Route path="admin/" element={<Home {...props} />} />
-                    <Route path="admin/form" element={<Form {...props} />} />
                     {/* Courses */}
                     <Route
                         path="admin/course"

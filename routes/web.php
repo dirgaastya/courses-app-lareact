@@ -44,6 +44,9 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('User/Home');
     })->name('dashboard');
+    Route::get('/form-registration', function () {
+        return Inertia::render('User/Form/RegisterForm');
+    })->name('register-form');
 });
 
 /*------------------------------------------
