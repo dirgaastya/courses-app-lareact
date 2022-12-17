@@ -32,14 +32,14 @@ const Course = (props) => {
                         .sort((a, b) => (a.id > b.id ? 1 : -1))
                         .filter((course) => {
                             return (
-                                course.period_id
+                                course.category_id
                                     .toLowerCase()
                                     .indexOf(query.toLowerCase()) !== -1
                             );
                         })
                         .filter((course) => {
                             return (
-                                course.name
+                                course.title
                                     .toLowerCase()
                                     .indexOf(searchQuery.toLowerCase()) !== -1
                             );
@@ -51,14 +51,14 @@ const Course = (props) => {
                         .sort((a, b) => (a.id > b.id ? -1 : 1))
                         .filter((course) => {
                             return (
-                                course.period_id
+                                course.category_id
                                     .toLowerCase()
                                     .indexOf(query.toLowerCase()) !== -1
                             );
                         })
                         .filter((course) => {
                             return (
-                                course.name
+                                course.title
                                     .toLowerCase()
                                     .indexOf(searchQuery.toLowerCase()) !== -1
                             );

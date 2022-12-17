@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\PeriodSeeder;
+use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\AdminUserSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(AdminUserSeeder::class);
-        $this->call(PeriodSeeder::class);
+        $this->call(CategoriesSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

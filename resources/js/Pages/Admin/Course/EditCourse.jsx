@@ -4,6 +4,7 @@ import { useEffect } from "react";
 const EditCourse = (props) => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const categories = props.categories;
     const course = props.data.filter((course) => course.id === id);
     const { data, setData, errors, put, wasSuccessful } = useForm({
         title: course[0].title || "",
@@ -50,7 +51,6 @@ const EditCourse = (props) => {
                                     type="text"
                                     name="course_title"
                                     id="course_title"
-                                    value={course[0].title}
                                     autoComplete="given-name"
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
@@ -73,7 +73,6 @@ const EditCourse = (props) => {
                                     type="number"
                                     name="course_price"
                                     id="course_price"
-                                    value={course[0].price}
                                     autoComplete="given-name"
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
@@ -94,7 +93,6 @@ const EditCourse = (props) => {
                                 </label>
                                 <textarea
                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    value={course[0].description}
                                     onChange={(e) => {
                                         setData("description", e.target.value);
                                     }}
@@ -114,22 +112,20 @@ const EditCourse = (props) => {
                                 <select
                                     id="category_id"
                                     name="category_id"
-                                    value={course[0].category_id}
                                     autoComplete="category_id"
                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     onChange={(e) =>
                                         setData("category_id", e.target.value)
                                     }
                                 >
-                                    <option value={"FY01"}>
-                                        First Year - FY
-                                    </option>
-                                    <option value={"MY01"}>
-                                        Mid Year - MY
-                                    </option>
-                                    <option value={"EY01"}>
-                                        End Year - EY
-                                    </option>
+                                    {categories.map((category, index) => (
+                                        <option
+                                            value={category.id}
+                                            key={`option-category-${index}`}
+                                        >
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>

@@ -34,11 +34,19 @@ const Index = (props) => {
 
                     <Route
                         path="admin/course/add"
-                        element={<AddCourse {...props} />}
+                        element={
+                            <AddCourse {...props} data={categories.data} />
+                        }
                     />
                     <Route
                         path="admin/course/:id"
-                        element={<EditCourse {...props} data={courses.data} />}
+                        element={
+                            <EditCourse
+                                {...props}
+                                data={courses.data}
+                                categories={categories.data}
+                            />
+                        }
                     />
 
                     {/* Period */}

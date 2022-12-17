@@ -3,6 +3,7 @@ import { useForm } from "@inertiajs/inertia-react";
 import { useEffect } from "react";
 const AddCourse = (props) => {
     const navigate = useNavigate();
+    const categories = props.data;
     const { data, setData, errors, post, wasSuccessful } = useForm({
         title: "",
         description: "",
@@ -69,22 +70,20 @@ const AddCourse = (props) => {
                                 <select
                                     id="category_id"
                                     name="category_id"
-                                    value={data.category_id}
                                     autoComplete="category_id"
                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     onChange={(e) =>
                                         setData("category_id", e.target.value)
                                     }
                                 >
-                                    <option value={"FY01"}>
-                                        First Year - FY
-                                    </option>
-                                    <option value={"MY01"}>
-                                        Mid Year - MY
-                                    </option>
-                                    <option value={"EY01"}>
-                                        End Year - EY
-                                    </option>
+                                    {categories.map((category, index) => (
+                                        <option
+                                            value={category.id}
+                                            key={`option-category-${index}`}
+                                        >
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -99,7 +98,9 @@ const AddCourse = (props) => {
                                     type="number"
                                     name="course_price"
                                     id="course_price"
-                                    autoComplete="given-name"
+                                    autoComplete="price"
+                                    min="1"
+                                    step="any"
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
                                         setData("price", e.target.value)
