@@ -182,7 +182,7 @@ const Course = (props) => {
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
                                                 <p className="dark:text-gray-100">
-                                                    {course.category_id}
+                                                    {course.category.name}
                                                 </p>
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">

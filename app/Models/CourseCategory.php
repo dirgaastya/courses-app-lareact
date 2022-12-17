@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CourseCategory extends Model
 {
@@ -17,4 +18,9 @@ class CourseCategory extends Model
         'name',
         'description'
     ];
+
+    public function course()
+    {
+        return $this->hasMany(Course::class, 'category_id');
+    }
 }

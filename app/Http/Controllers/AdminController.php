@@ -18,7 +18,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->paginate(10);
+        $courses = Course::with('category')->paginate(10);
+
+
         $categories = CourseCategory::latest()->paginate(10);
         return Inertia::render('Admin/Index', ['courses' => $courses, 'categories' => $categories]);
     }
@@ -31,10 +33,11 @@ class AdminController extends Controller
      */
     public function storeCourse(Request $request)
     {
+        $prefix = $request->category_id;
         $config = [
             'table' => 'courses',
             'length' => 8,
-            'prefix' => date('ym')
+            'prefix' => $prefix
         ];
 
         $id = IdGenerator::generate($config);
