@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Course;
-use App\Models\Period;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CourseCategory;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class AdminController extends Controller
@@ -19,8 +19,8 @@ class AdminController extends Controller
     public function index()
     {
         $courses = Course::latest()->paginate(10);
-        $periods = Period::latest()->paginate(10);
-        return Inertia::render('Admin/Index', ['courses' => $courses, 'periods' => $periods]);
+        $categories = CourseCategory::latest()->paginate(10);
+        return Inertia::render('Admin/Index', ['courses' => $courses, 'categories' => $categories]);
     }
 
     /**
@@ -41,36 +41,34 @@ class AdminController extends Controller
 
 
         $request->validate([
-            'name' => 'required',
-            'mentor_name' => 'required',
-            'period_id' => 'required'
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'category_id' => 'required'
         ]);
 
         $courses = new Course();
         $courses->id = $id;
-        $courses->name = $request->name;
-        $courses->mentor_name = $request->mentor_name;
-        $courses->period_id = $request->period_id;
+        $courses->title = $request->title;
+        $courses->description = $request->description;
+        $courses->price = $request->price;
+        $courses->category_id = $request->category_id;
         $courses->save();
     }
 
-    public function storePeriod(Request $request)
+    public function storeCategory(Request $request)
     {
         $request->validate([
             'id' => 'required',
             'name' => 'required',
-            'time_start' => 'required',
-            'time_end' => 'required',
-            'cost' => 'required'
+            'description' => 'required'
         ]);
 
-        $periods = new Period();
-        $periods->id = $request->id;
-        $periods->name = $request->name;
-        $periods->time_start = $request->time_start;
-        $periods->time_end = $request->time_end;
-        $periods->cost = $request->cost;
-        $periods->save();
+        $category = new CourseCategory();
+        $category->id = $request->id;
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
     }
 
     /**
@@ -83,25 +81,24 @@ class AdminController extends Controller
     public function updateCourse(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'mentor_name' => 'required',
-            'period_id' => 'required'
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'category_id' => 'required'
         ]);
 
         Course::find($id)->update($request->all());
     }
 
-    public function updatePeriod(Request $request, $id)
+    public function updateCategory(Request $request, $id)
     {
         $request->validate([
             'id' => 'required',
             'name' => 'required',
-            'time_start' => 'required',
-            'time_end' => 'required',
-            'cost' => 'required'
+            'description' => 'required'
         ]);
 
-        Period::find($id)->update($request->all());
+        CourseCategory::find($id)->update($request->all());
     }
 
     /**
@@ -115,8 +112,8 @@ class AdminController extends Controller
         Course::find($id)->delete();
     }
 
-    public function destroyPeriod($id)
+    public function destroyCategory($id)
     {
-        Period::find($id)->delete();
+        CourseCategory::find($id)->delete();
     }
 }

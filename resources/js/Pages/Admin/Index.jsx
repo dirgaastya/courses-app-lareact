@@ -5,12 +5,12 @@ import Home from "@/Pages/Admin/Home";
 import Course from "@/Pages/Admin/Course/Course";
 import AddCourse from "@/Pages/Admin/Course/AddCourse";
 import EditCourse from "@/Pages/Admin/Course/EditCourse";
-import Period from "@/Pages/Admin/Period/Period";
-import AddPeriod from "@/Pages/Admin/Period/AddPeriod";
-import EditPeriod from "@/Pages/Admin/Period/EditPeriod";
+import Category from "@/Pages/Admin/Category/Category";
+import AddCategory from "@/Pages/Admin/Category/AddCategory";
+import EditCategory from "@/Pages/Admin/Category/EditCategory";
 
 const Index = (props) => {
-    const { courses, periods } = usePage().props;
+    const { courses, categories } = usePage().props;
     return (
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
@@ -43,27 +43,29 @@ const Index = (props) => {
 
                     {/* Period */}
                     <Route
-                        path="admin/period"
+                        path="admin/category"
                         element={
-                            <Period
+                            <Category
                                 {...props}
-                                data={periods.data}
-                                from={periods.from}
-                                to={periods.to}
-                                next={periods.next_page_url}
-                                prev={periods.prev_page_url}
-                                total={periods.total}
+                                data={categories.data}
+                                from={categories.from}
+                                to={categories.to}
+                                next={categories.next_page_url}
+                                prev={categories.prev_page_url}
+                                total={categories.total}
                             />
                         }
                     />
                     <Route
-                        path="admin/period/add"
-                        element={<AddPeriod {...props} />}
+                        path="admin/category/add"
+                        element={<AddCategory {...props} />}
                     />
 
                     <Route
-                        path="admin/period/:id"
-                        element={<EditPeriod {...props} data={periods.data} />}
+                        path="admin/category/:id"
+                        element={
+                            <EditCategory {...props} data={categories.data} />
+                        }
                     />
                 </Routes>
             </AuthenticatedLayout>

@@ -12,7 +12,7 @@ const Course = (props) => {
     const courses = props.data;
     const { from, to, total, next, prev } = props;
     const [courseList, setCourseList] = useState([]);
-    const [filterPeriod, setFilterPeriod] = useState("");
+    const [categoryFilter, setCategoryFilter] = useState("");
     const [orderId, setOrderId] = useState("dsc");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const Course = (props) => {
     }, []);
 
     useEffect(() => {
-        const query = filterPeriod;
+        const query = categoryFilter;
         const searchQuery = search;
         if (courses !== undefined) {
             if (orderId === "asc") {
@@ -66,13 +66,25 @@ const Course = (props) => {
                 );
             }
         }
-    }, [filterPeriod, orderId, search]);
+    }, [categoryFilter, orderId, search]);
 
     const handleDelete = (id) => {
         if (confirm("Are you sure you want to delete this user?")) {
             Inertia.delete(route("admin-course-delete", id));
             setCourseList(courseList.filter((course) => course.id !== id));
         }
+    };
+
+    const rupiahFormat = (num) => {
+        let num_string = num.toString(),
+            rest_number = num_string.length % 3,
+            rupiah = num_string.substr(0, rest_number),
+            thousand = num_string.substr(rest_number).match(/\d{3}/g);
+        if (thousand) {
+            let separator = rest_number ? "." : "";
+            rupiah += separator + thousand.join(".");
+        }
+        return rupiah;
     };
     return (
         <div>
@@ -87,19 +99,19 @@ const Course = (props) => {
                         <div className="w-full lg:w-1/2 flex gap-x-2">
                             <div className="w-1/2 lg:max-w-sm lg:flex lg:flex-col">
                                 <label
-                                    htmlFor="periodFilter"
+                                    htmlFor="categoryFilter"
                                     className="text-sm text-gray-600 font-semibold"
                                 >
-                                    Filter by period
+                                    Filter by category
                                 </label>
                                 <select
-                                    id="periodFilter"
-                                    name="periodFilter"
-                                    autoComplete="periodFilter"
+                                    id="categoryFilter"
+                                    name="categoryFilter"
+                                    autoComplete="categoryFilter"
                                     className="w-full py-1 pr-8 text-gray-500 selection:text-sm rounded-md shadow border border-gray-200 focus:bg-white text-sm focus:border-indigo-600"
-                                    value={filterPeriod}
+                                    value={categoryFilter}
                                     onChange={(e) =>
-                                        setFilterPeriod(e.target.value)
+                                        setCategoryFilter(e.target.value)
                                     }
                                 >
                                     <option value={""}>None</option>
@@ -138,13 +150,16 @@ const Course = (props) => {
                                         ID
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                        Name
+                                        Title
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 hidden md:table-cell">
-                                        Mentor
+                                        Category
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                        Period
+                                        Description
+                                    </th>
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                        Price
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
                                         Action
@@ -162,16 +177,19 @@ const Course = (props) => {
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <p className="dark:text-gray-100">
-                                                    {course.name}
+                                                    {course.title}
                                                 </p>
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
                                                 <p className="dark:text-gray-100">
-                                                    {course.mentor_name}
+                                                    {course.category_id}
                                                 </p>
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                                {course.period_id}
+                                                {course.description}
+                                            </td>
+                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
+                                                Rp. {rupiahFormat(course.price)}
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <div className="flex flex-col md:flex-row items-center gap-2">

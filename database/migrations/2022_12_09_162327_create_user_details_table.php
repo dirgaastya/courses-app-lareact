@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('user_details', function (Blueprint $table) {
             $table->string('id', 8)->primary();
-            $table->string('title');
-            $table->text('description');
-            $table->bigInteger('price');
+            $table->string('name');
+            $table->date('birthdate');
+            $table->string('birthplace');
+            $table->string('city');
+            $table->enum('education', ['SMA/SMK', 'S1', 'S2', 'S3']);
+            $table->string('job');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('user_details');
     }
 };

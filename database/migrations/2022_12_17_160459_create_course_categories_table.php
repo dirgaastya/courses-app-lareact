@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periods', function (Blueprint $table) {
-            $table->string('id', 4)->primary();
+        Schema::create('course_categories', function (Blueprint $table) {
+            $table->string('id', 2)->primary();
             $table->string('name');
-            $table->date('time_start');
-            $table->date('time_end');
-            $table->bigInteger('cost');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periods');
+        Schema::dropIfExists('course_categories');
     }
 };

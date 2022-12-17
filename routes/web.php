@@ -66,12 +66,12 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
         Route::put('/admin/course/{id}', 'updateCourse')->name('admin-course-update');
         Route::delete('/admin/course/{id}', 'destroyCourse')->name('admin-course-delete');
 
-        Route::get('/admin/period', 'index')->name('admin-period');
-        Route::get('/admin/period/add', 'index')->name('admin-period-add');
-        Route::post('/admin/period/add', 'storePeriod')->name('admin-period-post');
-        Route::get('/admin/period/{id}', 'index')->name('admin-period-edit');
-        Route::put('/admin/period/{id}', 'updatePeriod')->name('admin-period-update');
-        Route::delete('/admin/period/{id}', 'destroyPeriod')->name('admin-period-delete');
+        Route::get('/admin/category', 'index')->name('admin-category');
+        Route::get('/admin/category/add', 'index')->name('admin-category-add');
+        Route::post('/admin/category/add', 'storeCategory')->name('admin-category-post');
+        Route::get('/admin/category/{id}', 'index')->name('admin-category-edit');
+        Route::put('/admin/category/{id}', 'updateCategory')->name('admin-category-update');
+        Route::delete('/admin/category/{id}', 'destroyCategory')->name('admin-category-delete');
     });
 });
 

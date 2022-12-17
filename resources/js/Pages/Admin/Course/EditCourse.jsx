@@ -6,9 +6,10 @@ const EditCourse = (props) => {
     const navigate = useNavigate();
     const course = props.data.filter((course) => course.id === id);
     const { data, setData, errors, put, wasSuccessful } = useForm({
-        name: course[0].name || "",
-        mentor_name: course[0].mentor_name || "",
-        period_id: course[0].period_id || "",
+        title: course[0].title || "",
+        description: course[0].description || "",
+        price: course[0].price || "",
+        category_id: course[0].category_id || "",
     });
 
     useEffect(() => {
@@ -25,9 +26,7 @@ const EditCourse = (props) => {
         <div>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
-                    <span className="font-bold">
-                        Edit <span>{course[0].name}</span> Course{" "}
-                    </span>
+                    <span className="font-bold">Edit Course </span>
                 </div>
                 <Link
                     to="/admin/course"
@@ -40,63 +39,86 @@ const EditCourse = (props) => {
                 <div className="shadow overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
-                            <div className="col-span-6">
+                            <div className="col-span-6 sm:col-span-4">
                                 <label
-                                    htmlFor="course_name"
+                                    htmlFor="course_title"
                                     className="block text-sm font-medium text-gray-700"
                                 >
                                     Course name
                                 </label>
                                 <input
                                     type="text"
-                                    name="course_name"
-                                    id="course_name"
-                                    value={data.name}
-                                    placeholder={course[0].name}
-                                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                    name="course_title"
+                                    id="course_title"
+                                    value={course[0].title}
+                                    autoComplete="given-name"
+                                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
-                                        setData("name", e.target.value)
+                                        setData("title", e.target.value)
                                     }
                                 />
+                                <span className="text-xs text-red-600 font-thin">
+                                    {errors.title}
+                                </span>
                             </div>
 
                             <div className="col-span-6 sm:col-span-4">
                                 <label
-                                    htmlFor="mentor_name"
+                                    htmlFor="course_price"
                                     className="block text-sm font-medium text-gray-700"
                                 >
-                                    Mentor name
+                                    Price
                                 </label>
                                 <input
-                                    type="text"
-                                    name="mentor_name"
-                                    id="mentor_name"
+                                    type="number"
+                                    name="course_price"
+                                    id="course_price"
+                                    value={course[0].price}
                                     autoComplete="given-name"
-                                    value={data.mentor_name}
-                                    placeholder={course[0].mentor_name}
-                                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
-                                        setData("mentor_name", e.target.value)
+                                        setData("price", e.target.value)
                                     }
                                 />
+                                <span className="text-xs text-red-600 font-thin">
+                                    {errors.price}
+                                </span>
                             </div>
 
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6 sm:col-span-4">
                                 <label
-                                    htmlFor="period_id"
+                                    htmlFor="desc"
                                     className="block text-sm font-medium text-gray-700"
                                 >
-                                    Period
+                                    Description
+                                </label>
+                                <textarea
+                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    value={course[0].description}
+                                    onChange={(e) => {
+                                        setData("description", e.target.value);
+                                    }}
+                                />
+                                <span className="text-xs text-red-600 font-thin">
+                                    {errors.description}
+                                </span>
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-4">
+                                <label
+                                    htmlFor="category_id"
+                                    className="block text-sm font-medium text-gray-700"
+                                >
+                                    Category
                                 </label>
                                 <select
-                                    id="period_id"
-                                    name="period_id"
-                                    value={data.period_id}
-                                    placeholder={course[0].period_id}
-                                    autoComplete="period_id"
+                                    id="category_id"
+                                    name="category_id"
+                                    value={course[0].category_id}
+                                    autoComplete="category_id"
                                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     onChange={(e) =>
-                                        setData("period_id", e.target.value)
+                                        setData("category_id", e.target.value)
                                     }
                                 >
                                     <option value={"FY01"}>

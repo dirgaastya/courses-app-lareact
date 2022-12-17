@@ -65,11 +65,11 @@ const Sidebar = ({ auth }) => {
 				rounded-lg"
                     >
                         <Link
-                            to="/admin/period"
+                            to="/admin/category"
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
                             <AiOutlineClockCircle className="h-5 w-5" />
-                            <span className="text-xs lg:mt-2">Period</span>
+                            <span className="text-xs lg:mt-2">Category</span>
                         </Link>
                     </li>
                     <li

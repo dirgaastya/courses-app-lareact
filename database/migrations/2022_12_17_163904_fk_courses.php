@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->string('period_id', 4);
-            $table->foreign('period_id', 'fk_courses_period_id')->references('id')->on('periods')->onUpdate('CASCADE');
+            $table->string('category_id', 4);
+            $table->foreign('category_id', 'fk_courses_category_id')->references('id')->on('course_categories')->onUpdate('CASCADE');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->dropForeign('fk_courses_period_id');
-            $table->dropColumn('period_id');
+            $table->dropForeign('fk_courses_category_id');
+            $table->dropColumn('category_id');
         });
     }
 };
