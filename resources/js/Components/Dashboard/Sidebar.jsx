@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
     AiOutlineHome,
     AiOutlineRead,
-    AiOutlineClockCircle,
+    AiOutlineBars,
     AiOutlineUser,
 } from "react-icons/ai";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
@@ -68,7 +68,7 @@ const Sidebar = ({ auth }) => {
                             to="/admin/category"
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
-                            <AiOutlineClockCircle className="h-5 w-5" />
+                            <AiOutlineBars className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Category</span>
                         </Link>
                     </li>
@@ -77,7 +77,7 @@ const Sidebar = ({ auth }) => {
 				rounded-lg"
                     >
                         <Link
-                            to="/admin/course"
+                            to="/admin/student"
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
                             <AiOutlineUser className="h-5 w-5" />

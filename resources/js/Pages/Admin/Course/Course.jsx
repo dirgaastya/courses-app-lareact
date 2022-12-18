@@ -10,6 +10,7 @@ import InputFilterId from "@/Components/Dashboard/InputFilterId";
 
 const Course = (props) => {
     const courses = props.data;
+    const categories = props.categories;
     const { from, to, total, next, prev } = props;
     const [courseList, setCourseList] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState("");
@@ -114,16 +115,15 @@ const Course = (props) => {
                                         setCategoryFilter(e.target.value)
                                     }
                                 >
-                                    <option value={""}>None</option>
-                                    <option value={"FY01"}>
-                                        First Year - FY
-                                    </option>
-                                    <option value={"MY01"}>
-                                        Mid Year - MY
-                                    </option>
-                                    <option value={"EY01"}>
-                                        End Year - EY
-                                    </option>
+                                    <option value="">None</option>
+                                    {categories.map((category, index) => (
+                                        <option
+                                            value={category.id}
+                                            key={`option-category-${index}`}
+                                        >
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <InputFilterId

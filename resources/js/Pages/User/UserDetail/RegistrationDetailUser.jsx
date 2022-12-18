@@ -1,7 +1,34 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
+import { useForm } from "@inertiajs/inertia-react";
 import { Link } from "@inertiajs/inertia-react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const RegisterForm = (props) => {
+const RegistrationDetailUser = (props) => {
+    const navigate = useNavigate();
+    const { data, setData, errors, post, wasSuccessful } = useForm({
+        name: "",
+        birthplace: "",
+        birthdate: "",
+        city: "",
+        education: "SMA/SMK",
+        job: "",
+        phone_number: "",
+    });
+
+    console.log(data);
+
+    useEffect(() => {
+        if (wasSuccessful) {
+            navigate("/dashboard");
+        }
+    }, [wasSuccessful]);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        post(route("add-user-detail"));
+    }
+
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center py-6  bg-gray-100">
             <div>
@@ -14,7 +41,7 @@ const RegisterForm = (props) => {
                 <div className="font-semibold py-2">
                     <h3>Data Registration</h3>
                 </div>
-                <form method="POST">
+                <form onSubmit={handleSubmit} method="POST">
                     <div className="w-full">
                         <div className="px-4 py-5 bg-white sm:p-6">
                             <div className="grid grid-cols-6 gap-6">
@@ -32,6 +59,9 @@ const RegisterForm = (props) => {
                                         placeholder="Full name"
                                         autoComplete="given-name"
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
+                                        onChange={(e) => {
+                                            setData("name", e.target.value);
+                                        }}
                                     />
                                 </div>
 
@@ -49,6 +79,12 @@ const RegisterForm = (props) => {
                                         autoComplete="birthplace"
                                         placeholder="Jakarta"
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        onChange={(e) => {
+                                            setData(
+                                                "birthplace",
+                                                e.target.value
+                                            );
+                                        }}
                                     />
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
@@ -64,6 +100,12 @@ const RegisterForm = (props) => {
                                         name="birthdate"
                                         autoComplete="birthdate"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        onChange={(e) => {
+                                            setData(
+                                                "birthdate",
+                                                e.target.value
+                                            );
+                                        }}
                                     />
                                 </div>
 
@@ -81,6 +123,9 @@ const RegisterForm = (props) => {
                                         placeholder="Bandung"
                                         autoComplete="city"
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
+                                        onChange={(e) => {
+                                            setData("city", e.target.value);
+                                        }}
                                     />
                                 </div>
                                 <div className="col-span-6">
@@ -97,6 +142,9 @@ const RegisterForm = (props) => {
                                         placeholder="Student"
                                         autoComplete="job"
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
+                                        onChange={(e) => {
+                                            setData("job", e.target.value);
+                                        }}
                                     />
                                 </div>
                                 <div className="col-span-6">
@@ -111,6 +159,12 @@ const RegisterForm = (props) => {
                                         name="education"
                                         autoComplete="education"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        onChange={(e) => {
+                                            setData(
+                                                "education",
+                                                e.target.value
+                                            );
+                                        }}
                                     >
                                         <option value={"SMK/SMA"}>
                                             SMK / SMA
@@ -135,6 +189,12 @@ const RegisterForm = (props) => {
                                         autoComplete="phone_number"
                                         pattern="((\+62 8\d{2}([ -])|08\d{2}([ -]?)|\+628\d{2})\d{4}(\3\4)\d{2,5})"
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
+                                        onChange={(e) => {
+                                            setData(
+                                                "phone_number",
+                                                e.target.value
+                                            );
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -154,4 +214,4 @@ const RegisterForm = (props) => {
     );
 };
 
-export default RegisterForm;
+export default RegistrationDetailUser;

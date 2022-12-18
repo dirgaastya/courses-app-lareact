@@ -4,10 +4,9 @@ use App\Http\Controllers\AdminController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +43,11 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('User/Home');
     })->name('dashboard');
-    Route::get('/form-registration', function () {
-        return Inertia::render('User/Form/RegisterForm');
-    })->name('register-form');
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail');
+        Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail');
+    });
 });
 
 /*------------------------------------------

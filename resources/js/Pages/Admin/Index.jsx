@@ -23,6 +23,7 @@ const Index = (props) => {
                             <Course
                                 {...props}
                                 data={courses.data}
+                                categories={categories.data}
                                 from={courses.from}
                                 to={courses.to}
                                 next={courses.next_page_url}
