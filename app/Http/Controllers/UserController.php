@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class UserController extends Controller
@@ -34,7 +36,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'birthdate' => 'required',
-            'birtplace' => 'required',
+            'birthplace' => 'required',
             'city' => 'required',
             'education' => 'required',
             'job'  => 'required',
@@ -43,7 +45,6 @@ class UserController extends Controller
         $userID = Auth::id();
         $userDetail = new UserDetail();
         $userDetail->id = $id;
-        $userDetail->user_id = $userID;
         $userDetail->name = $request->name;
         $userDetail->birthdate = $request->birthdate;
         $userDetail->birthplace = $request->birthplace;
@@ -51,6 +52,12 @@ class UserController extends Controller
         $userDetail->education = $request->education;
         $userDetail->job = $request->job;
         $userDetail->phone_number = $request->phone_number;
+        $userDetail->user_id = $userID;
         $userDetail->save();
+
+        $userStatus = User::find($userID);
+        $userStatus->status = true;
+        $userStatus->save();
+        return Redirect::route('dashboard');
     }
 }

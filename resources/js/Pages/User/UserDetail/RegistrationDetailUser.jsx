@@ -1,28 +1,17 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { useForm } from "@inertiajs/inertia-react";
 import { Link } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const RegistrationDetailUser = (props) => {
-    const navigate = useNavigate();
-    const { data, setData, errors, post, wasSuccessful } = useForm({
+    const { data, setData, errors, post } = useForm({
         name: "",
-        birthplace: "",
         birthdate: "",
+        birthplace: "",
         city: "",
         education: "SMA/SMK",
         job: "",
         phone_number: "",
     });
-
-    console.log(data);
-
-    useEffect(() => {
-        if (wasSuccessful) {
-            navigate("/dashboard");
-        }
-    }, [wasSuccessful]);
 
     async function handleSubmit(e) {
         e.preventDefault();
