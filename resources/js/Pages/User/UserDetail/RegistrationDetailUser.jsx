@@ -188,10 +188,15 @@ const RegistrationDetailUser = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="px-4 py-3 text-right sm:px-6">
+                        <div className="flex items-center justify-end gap-x-4 px-4 py-3 sm:px-6">
+                            <Link href="/">
+                                <span className="text-sm text-blue-300 font-thin">
+                                    Skip for now
+                                </span>
+                            </Link>
                             <button
                                 type="submit"
-                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Submit
                             </button>

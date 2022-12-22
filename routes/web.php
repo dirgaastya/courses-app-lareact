@@ -45,8 +45,9 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
     })->name('dashboard');
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail');
-        Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail');
+        Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail')->middleware(['checkStatus:0']);
+        // Route::get('/form-registration', 'registrationUserDetailIndexActived')->name('register-user-detail-actived')->middleware(['checkStatus:1']);
+        Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail')->middleware(['checkStatus:0']);
     });
 });
 
@@ -81,7 +82,7 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
 Profile Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'checkStatus:1'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
