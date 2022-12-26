@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { usePage, Link } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
@@ -9,9 +10,8 @@ import InputSearch from "@/Components/Dashboard/InputSearch";
 import InputFilterId from "@/Components/Dashboard/InputFilterId";
 
 const Course = (props) => {
-    const courses = props.data;
-    const categories = props.categories;
-    const { from, to, total, next, prev } = props;
+    const { courses, categories } = usePage().props;
+    const { from, to, total, next_page_url, prev_page_url } = courses;
     const [courseList, setCourseList] = useState([]);
     const [categoryFilter, setCategoryFilter] = useState("");
     const [orderId, setOrderId] = useState("dsc");
@@ -19,17 +19,17 @@ const Course = (props) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setCourseList(courses);
+        setCourseList(courses.data);
         setLoading(false);
     }, []);
 
     useEffect(() => {
         const query = categoryFilter;
         const searchQuery = search;
-        if (courses !== undefined) {
+        if (courses.data !== undefined) {
             if (orderId === "asc") {
                 setCourseList(
-                    courses
+                    courses.data
                         .sort((a, b) => (a.id > b.id ? 1 : -1))
                         .filter((course) => {
                             return (
@@ -48,7 +48,7 @@ const Course = (props) => {
                 );
             } else if (orderId === "dsc") {
                 setCourseList(
-                    courses
+                    courses.data
                         .sort((a, b) => (a.id > b.id ? -1 : 1))
                         .filter((course) => {
                             return (
@@ -71,7 +71,7 @@ const Course = (props) => {
 
     const handleDelete = (id) => {
         if (confirm("Are you sure you want to delete this user?")) {
-            Inertia.delete(route("admin-course-delete", id));
+            Inertia.delete(route("course.destroy", id));
             setCourseList(courseList.filter((course) => course.id !== id));
         }
     };
@@ -88,7 +88,7 @@ const Course = (props) => {
         return rupiah;
     };
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <Header title="Course List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between my-6">
@@ -133,7 +133,7 @@ const Course = (props) => {
                         </div>
                     </div>
                     <Link
-                        to="/admin/course/add"
+                        to="/admin/course/create"
                         className="mt-2 lg:mt-0 text-white text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-blue-500 hover:bg-blue-600 transition ease-linear duration-300"
                     >
                         Add Course
@@ -194,7 +194,7 @@ const Course = (props) => {
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <div className="flex flex-col md:flex-row items-center gap-2">
                                                     <Link
-                                                        to={`/admin/course/${course.id}`}
+                                                        href={`/admin/course/${course.id}`}
                                                         className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-400 hover:bg-cyan-500 transition ease-linear duration-300"
                                                     >
                                                         <MdModeEdit />
@@ -245,14 +245,14 @@ const Course = (props) => {
                         <Pagination
                             from={from}
                             to={to}
-                            next={next}
-                            prev={prev}
+                            next={next_page_url}
+                            prev={prev_page_url}
                             total={total}
                         />
                     </div>
                 )}
             </div>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

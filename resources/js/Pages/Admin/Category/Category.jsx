@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { usePage, Link } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
@@ -9,24 +10,24 @@ import InputSearch from "@/Components/Dashboard/InputSearch";
 import InputFilterId from "@/Components/Dashboard/InputFilterId";
 
 const Category = (props) => {
-    const categories = props.data;
-    const { from, to, total, next, prev } = props;
+    const { categories } = usePage().props;
+    const { from, to, total, next_page_url, prev_page_url } = categories;
     const [categoriesList, setCategoriesList] = useState([]);
     const [orderId, setOrderId] = useState("dsc");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setCategoriesList(categories);
+        setCategoriesList(categories.data);
         setLoading(false);
     }, []);
 
     useEffect(() => {
         const searchQuery = search;
-        if (categories !== undefined) {
+        if (categories.data !== undefined) {
             if (orderId === "asc") {
                 setCategoriesList(
-                    categories
+                    categories.data
                         .sort((a, b) => (a.id > b.id ? 1 : -1))
                         .filter((category) => {
                             return (
@@ -38,7 +39,7 @@ const Category = (props) => {
                 );
             } else if (orderId === "dsc") {
                 setCategoriesList(
-                    categories
+                    categories.data
                         .sort((a, b) => (a.id > b.id ? -1 : 1))
                         .filter((category) => {
                             return (
@@ -54,7 +55,7 @@ const Category = (props) => {
 
     const handleDelete = (id) => {
         if (confirm("Are you sure you want to delete this category?")) {
-            Inertia.delete(route("admin-category-delete", id));
+            Inertia.delete(route("category.destroy", id));
             setCategoriesList(
                 categoriesList.filter((category) => category.id !== id)
             );
@@ -62,7 +63,7 @@ const Category = (props) => {
     };
 
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <Header title="Category List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between my-6">
@@ -79,7 +80,7 @@ const Category = (props) => {
                         </div>
                     </div>
                     <Link
-                        to="/admin/category/add"
+                        href="/admin/category/create"
                         className="mt-2 lg:mt-0 text-white text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-blue-500 hover:bg-blue-600 transition ease-linear duration-300"
                     >
                         Add Category
@@ -179,14 +180,14 @@ const Category = (props) => {
                         <Pagination
                             from={from}
                             to={to}
-                            next={next}
-                            prev={prev}
+                            next={next_page_url}
+                            prev={prev_page_url}
                             total={total}
                         />
                     </div>
                 )}
             </div>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

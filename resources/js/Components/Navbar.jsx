@@ -43,7 +43,7 @@ const Navbar = ({ auth, handleDarkMode }) => {
                                                         auth.user.role ===
                                                         "user"
                                                             ? "dashboard"
-                                                            : "admin-dashboard"
+                                                            : "admin.index"
                                                     }`
                                                 )}
                                             >

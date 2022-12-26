@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { usePage, Link } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { BiShow } from "react-icons/bi";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
@@ -11,24 +12,24 @@ import InputFilterId from "@/Components/Dashboard/InputFilterId";
 import moment from "moment-timezone";
 
 const Student = (props) => {
-    const students = props.data;
-    const { from, to, total, next, prev } = props;
+    const { students } = usePage().props;
+    const { from, to, total, next_page_url, prev_page_url } = students;
     const [studentList, setStudentList] = useState([]);
     const [orderId, setOrderId] = useState("dsc");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setStudentList(students);
+        setStudentList(students.data);
         setLoading(false);
     }, []);
 
     useEffect(() => {
         const searchQuery = search;
-        if (students !== undefined) {
+        if (students.data !== undefined) {
             if (orderId === "asc") {
                 setStudentList(
-                    students
+                    students.data
                         .sort((a, b) => (a.id > b.id ? 1 : -1))
                         .filter((student) => {
                             return (
@@ -40,7 +41,7 @@ const Student = (props) => {
                 );
             } else if (orderId === "dsc") {
                 setStudentList(
-                    students
+                    students.data
                         .sort((a, b) => (a.id > b.id ? -1 : 1))
                         .filter((student) => {
                             return (
@@ -61,7 +62,7 @@ const Student = (props) => {
         }
     };
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <Header title="Student List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
                 <div className="w-full flex flex-col lg:flex-row lg:gap-x-2 lg:items-center my-6">
@@ -193,14 +194,14 @@ const Student = (props) => {
                         <Pagination
                             from={from}
                             to={to}
-                            next={next}
-                            prev={prev}
+                            next={next_page_url}
+                            prev={prev_page_url}
                             total={total}
                         />
                     </div>
                 )}
             </div>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

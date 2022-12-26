@@ -1,11 +1,13 @@
 import { Link } from "@inertiajs/inertia-react";
-import { Children } from "react";
 
 const RecentListCard = ({ title, children, to }) => {
     return (
         <div className="mr-6 w-full mt-8 py-2 px-8 flex-shrink-0 flex flex-col bg-white dark:bg-gray-600 rounded-lg">
             <div>
-                <Link className="flex items-center pt-1 pb-1 text-lg font-semibold capitalize dark:text-gray-300">
+                <Link
+                    href={`admin/${to}`}
+                    className="flex items-center pt-1 pb-1 text-lg font-semibold capitalize dark:text-gray-300"
+                >
                     <span>{title}</span>
                     <div className="ml-2">
                         <svg
@@ -27,7 +29,7 @@ const RecentListCard = ({ title, children, to }) => {
             {children}
             <div>
                 <a
-                    href="#"
+                    href={`admin/${to}`}
                     className="flex justify-center capitalize text-blue-500
 						dark:text-blue-200"
                 >
