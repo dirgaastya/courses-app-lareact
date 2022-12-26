@@ -7,6 +7,8 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CourseCategory;
+use App\Models\User;
+use App\Models\UserDetail;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class AdminController extends Controller
@@ -19,10 +21,9 @@ class AdminController extends Controller
     public function index()
     {
         $courses = Course::with('category')->paginate(10);
-
-
         $categories = CourseCategory::latest()->paginate(10);
-        return Inertia::render('Admin/Index', ['courses' => $courses, 'categories' => $categories]);
+        $students = User::with('userDetail')->latest()->where('role', 'user')->paginate(10);
+        return Inertia::render('Admin/Index', ['courses' => $courses, 'categories' => $categories, 'students' => $students]);
     }
 
     /**
@@ -104,6 +105,10 @@ class AdminController extends Controller
         CourseCategory::find($id)->update($request->all());
     }
 
+    public function updateStudent(Request $request, $id)
+    {
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -118,5 +123,12 @@ class AdminController extends Controller
     public function destroyCategory($id)
     {
         CourseCategory::find($id)->delete();
+    }
+    public function destroyStudent($id)
+    {
+        $getUser = UserDetail::find($id);
+        $user = User::find($getUser->user_id);
+        $getUser->delete();
+        $user->delete();
     }
 }

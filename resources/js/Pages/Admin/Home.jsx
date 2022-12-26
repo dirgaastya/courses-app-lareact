@@ -1,6 +1,6 @@
 import Card from "@/Components/Dashboard/Card";
 import RecentListCard from "@/Components/Dashboard/RecenListCard";
-
+import moment from "moment-timezone";
 export default function Dashboard(props) {
     return (
         <div>
@@ -10,12 +10,13 @@ export default function Dashboard(props) {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 <div>
-                    <RecentListCard title={"User"} to={"course"}>
+                    <RecentListCard title={"Student"} to={"students"}>
                         <Card
-                            title={"Basic Javascript"}
-                            body={"lorem ipsummmmmmmm"}
-                            author={"Hesecourse"}
-                            time={"14 hours ago."}
+                            title={props.student.name}
+                            body={props.student.email}
+                            time={moment
+                                .tz(props.student.created_at, "Asia/Jakarta")
+                                .fromNow()}
                         />
                     </RecentListCard>
                     <RecentListCard title={"Form"} to={"form"}>

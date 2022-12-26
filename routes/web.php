@@ -74,6 +74,12 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
         Route::get('/admin/category/{id}', 'index')->name('admin-category-edit');
         Route::put('/admin/category/{id}', 'updateCategory')->name('admin-category-update');
         Route::delete('/admin/category/{id}', 'destroyCategory')->name('admin-category-delete');
+
+        Route::get('/admin/student', 'index')->name('admin-student');
+        Route::get('/admin/student/{id}', 'index')->name('admin-student-detail');
+        Route::get('/admin/student/edit/{id}', 'index')->name('admin-student-edit');
+        Route::put('/admin/student/edit/{id}', 'updateStudent')->name('admin-student-update');
+        Route::delete('/admin/student/{id}', 'destroyStudent')->name('admin-student-delete');
     });
 });
 

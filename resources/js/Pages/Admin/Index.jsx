@@ -8,14 +8,25 @@ import EditCourse from "@/Pages/Admin/Course/EditCourse";
 import Category from "@/Pages/Admin/Category/Category";
 import AddCategory from "@/Pages/Admin/Category/AddCategory";
 import EditCategory from "@/Pages/Admin/Category/EditCategory";
+import Student from "@/Pages/Admin/Student/Student";
+import StudentDetail from "@/Pages/Admin/Student/StudentDetail";
+import EditStudent from "@/Pages/Admin/Student/EditStudent";
 
 const Index = (props) => {
-    const { courses, categories } = usePage().props;
+    const { courses, categories, students } = usePage().props;
     return (
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
                 <Routes>
-                    <Route path="admin/" element={<Home {...props} />} />
+                    <Route
+                        path="admin/"
+                        element={
+                            <Home
+                                auth={props.auth}
+                                student={students.data[0]}
+                            />
+                        }
+                    />
                     {/* Courses */}
                     <Route
                         path="admin/course"
@@ -50,7 +61,7 @@ const Index = (props) => {
                         }
                     />
 
-                    {/* Period */}
+                    {/* Category */}
                     <Route
                         path="admin/category"
                         element={
@@ -75,6 +86,30 @@ const Index = (props) => {
                         element={
                             <EditCategory {...props} data={categories.data} />
                         }
+                    />
+
+                    {/* Student Route */}
+                    <Route
+                        path="admin/student"
+                        element={
+                            <Student
+                                {...props}
+                                data={students.data}
+                                from={students.from}
+                                to={students.to}
+                                next={students.next_page_url}
+                                prev={students.prev_page_url}
+                                total={students.total}
+                            />
+                        }
+                    />
+                    <Route
+                        path="admin/student/:id"
+                        element={<StudentDetail />}
+                    />
+                    <Route
+                        path="admin/student/edit/:id"
+                        element={<EditStudent />}
                     />
                 </Routes>
             </AuthenticatedLayout>
