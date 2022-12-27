@@ -7,6 +7,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\CourseCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class CourseController extends Controller
@@ -30,7 +31,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Course/AddCourse');
+        $categories = CourseCategory::all();
+        return Inertia::render('Admin/Course/AddCourse', ['categories' => $categories]);
     }
 
     /**
@@ -65,6 +67,7 @@ class CourseController extends Controller
         $courses->price = $request->price;
         $courses->category_id = $request->category_id;
         $courses->save();
+        return Redirect::route('course.index');
     }
 
     /**
@@ -84,16 +87,11 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required'
-        ]);
-
-        Course::find($id)->update($request->all());
+        $categories = CourseCategory::all();
+        $course = Course::find($id);
+        return Inertia::render('Admin/Course/EditCourse', ['categories' => $categories, 'course' => $course]);
     }
 
     /**
@@ -103,9 +101,17 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'category_id' => 'required'
+        ]);
+
+        Course::find($id)->update($request->all());
+        return Redirect::route('course.index');
     }
 
     /**

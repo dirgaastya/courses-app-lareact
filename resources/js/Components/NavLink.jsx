@@ -1,6 +1,8 @@
+import { Link } from "@inertiajs/inertia-react";
+
 export default function NavLink({ href, active, children }) {
     return (
-        <a
+        <Link
             href={href}
             className={
                 active
@@ -9,6 +11,6 @@ export default function NavLink({ href, active, children }) {
             }
         >
             {children}
-        </a>
+        </Link>
     );
 }

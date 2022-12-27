@@ -1,34 +1,26 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm, usePage, Link } from "@inertiajs/inertia-react";
+
 const AddCourse = (props) => {
-    const navigate = useNavigate();
-    const categories = props.data;
-    const { data, setData, errors, post, wasSuccessful } = useForm({
+    const { categories } = usePage().props;
+    const { data, setData, errors, post } = useForm({
         title: "",
         description: "",
         price: 0,
         category_id: "",
     });
-
-    useEffect(() => {
-        if (wasSuccessful) {
-            navigate("/admin/course");
-        }
-    }, [wasSuccessful]);
-
     async function handleSubmit(e) {
         e.preventDefault();
-        post(route("admin-course-add"));
+        post(route("course.store"));
     }
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
                     <span className="font-bold">Add Course </span>
                 </div>
                 <Link
-                    to="/admin/course"
+                    href={route("course.index")}
                     className="inline-flex justify-center py-1 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                 >
                     <p className="text-white ">Back</p>
@@ -76,6 +68,7 @@ const AddCourse = (props) => {
                                         setData("category_id", e.target.value)
                                     }
                                 >
+                                    <option value="">None</option>
                                     {categories.map((category, index) => (
                                         <option
                                             value={category.id}
@@ -140,7 +133,7 @@ const AddCourse = (props) => {
                     </div>
                 </div>
             </form>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

@@ -1,36 +1,26 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useForm } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm, usePage, Link } from "@inertiajs/inertia-react";
 const EditCourse = (props) => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const categories = props.categories;
-    const course = props.data.filter((course) => course.id === id);
+    const { course, categories } = usePage().props;
     const { data, setData, errors, put, wasSuccessful } = useForm({
-        title: course[0].title || "",
-        description: course[0].description || "",
-        price: course[0].price || "",
-        category_id: course[0].category_id || "",
+        title: course.title || "",
+        description: course.description || "",
+        price: course.price || "",
+        category_id: course.category_id || "",
     });
-
-    useEffect(() => {
-        if (wasSuccessful) {
-            navigate("/admin/course");
-        }
-    }, [wasSuccessful]);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        put(route("admin-course-update", course[0].id));
+        put(route("course.update", course.id));
     }
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
                     <span className="font-bold">Edit Course </span>
                 </div>
                 <Link
-                    to="/admin/course"
+                    href={route("course.index")}
                     className="inline-flex justify-center py-1 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                 >
                     <p className="text-white ">Back</p>
@@ -140,7 +130,7 @@ const EditCourse = (props) => {
                     </div>
                 </div>
             </form>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 
