@@ -1,32 +1,25 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm, Link } from "@inertiajs/inertia-react";
+
 const AddCategory = (props) => {
-    const navigate = useNavigate();
-    const { data, setData, errors, post, wasSuccessful } = useForm({
+    const { data, setData, errors, post } = useForm({
         id: "",
         name: "",
         description: "",
     });
 
-    useEffect(() => {
-        if (wasSuccessful) {
-            navigate("/admin/category");
-        }
-    }, [wasSuccessful]);
-
     async function handleSubmit(e) {
         e.preventDefault();
-        post(route("admin-category-add"));
+        post(route("category.store"));
     }
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
                     <span className="font-bold">Add Category </span>
                 </div>
                 <Link
-                    to="/admin/category"
+                    href={route("category.index")}
                     className="inline-flex justify-center py-1 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                 >
                     <p className="text-white ">Back</p>
@@ -107,7 +100,7 @@ const AddCategory = (props) => {
                     </div>
                 </div>
             </form>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

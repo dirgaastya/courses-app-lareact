@@ -80,7 +80,7 @@ const Category = (props) => {
                         </div>
                     </div>
                     <Link
-                        href="/admin/category/create"
+                        href={route("category.create")}
                         className="mt-2 lg:mt-0 text-white text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-blue-500 hover:bg-blue-600 transition ease-linear duration-300"
                     >
                         Add Category
@@ -129,7 +129,10 @@ const Category = (props) => {
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <div className="flex flex-col md:flex-row items-center gap-2">
                                                     <Link
-                                                        to={`/admin/category/${category.id}`}
+                                                        href={route(
+                                                            "category.edit",
+                                                            category.id
+                                                        )}
                                                         className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-400 hover:bg-cyan-500 transition ease-linear duration-300"
                                                     >
                                                         <MdModeEdit />

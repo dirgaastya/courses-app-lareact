@@ -1,34 +1,25 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useForm } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm, usePage, Link } from "@inertiajs/inertia-react";
 const EditPeriod = (props) => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const category = props.data.filter((category) => category.id === id);
-    const { data, setData, errors, put, wasSuccessful } = useForm({
-        id: category[0].id || "",
-        name: category[0].name || "",
-        description: category[0].description || "",
+    const { category } = usePage().props;
+    const { data, setData, errors, put } = useForm({
+        id: category.id || "",
+        name: category.name || "",
+        description: category.description || "",
     });
-
-    useEffect(() => {
-        if (wasSuccessful) {
-            navigate("/admin/category");
-        }
-    }, [wasSuccessful]);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        put(route("admin-category-update", id));
+        put(route("category.update", category.id));
     }
     return (
-        <div>
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
                     <span className="font-bold">Edit Category </span>
                 </div>
                 <Link
-                    to="/admin/category"
+                    href={route("category.index")}
                     className="inline-flex justify-center py-1 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                 >
                     <p className="text-white ">Back</p>
@@ -50,7 +41,7 @@ const EditPeriod = (props) => {
                                     name="category_id"
                                     id="category_id"
                                     maxLength="2"
-                                    placeholder={data.id}
+                                    placeholder={category.id}
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
                                         setData("id", e.target.value)
@@ -71,7 +62,7 @@ const EditPeriod = (props) => {
                                     type="text"
                                     name="category_name"
                                     id="category_name"
-                                    placeholder={category[0].name}
+                                    placeholder={category.name}
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
                                         setData("name", e.target.value)
@@ -111,7 +102,7 @@ const EditPeriod = (props) => {
                     </div>
                 </div>
             </form>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 

@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\CourseCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
@@ -49,6 +50,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
+        return Redirect::route('course.index');
     }
 
     /**
@@ -68,9 +70,10 @@ class CategoryController extends Controller
      * @param  \App\Models\CourseCategory  $courseCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(CourseCategory $courseCategory)
+    public function edit($id)
     {
-        return Inertia::render('Admin/Category/EditCategory');
+        $category = CourseCategory::find($id);
+        return Inertia::render('Admin/Category/EditCategory', ['category' => $category]);
     }
 
     /**
@@ -89,6 +92,7 @@ class CategoryController extends Controller
         ]);
 
         CourseCategory::find($id)->update($request->all());
+        return Redirect::route('category.index');
     }
 
     /**
