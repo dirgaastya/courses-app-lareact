@@ -48,9 +48,10 @@ class StudentController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $student = UserDetail::with('user')->where('user_id', $id)->first();
+        return Inertia::render('Admin/Student/StudentDetail', ['student' => $student]);
     }
 
     /**

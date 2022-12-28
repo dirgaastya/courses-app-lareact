@@ -138,7 +138,10 @@ const Student = (props) => {
                                                 <div className="flex flex-col md:flex-row items-center gap-2">
                                                     {student.status === 1 ? (
                                                         <Link
-                                                            to={`/admin/student/${student.id}`}
+                                                            href={route(
+                                                                "student.show",
+                                                                student.id
+                                                            )}
                                                             className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-400 hover:bg-teal-500 transition ease-linear duration-300"
                                                         >
                                                             <BiShow />
