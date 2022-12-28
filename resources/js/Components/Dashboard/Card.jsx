@@ -3,10 +3,7 @@ import React from "react";
 const Card = ({ title, body, author, time }) => {
     return (
         <div>
-            <a
-                className="p-5 flex flex-col justify-between bg-gray-100 dark:bg-gray-200 rounded-lg"
-                href="/"
-            >
+            <div className="p-5 flex flex-col justify-between bg-gray-100 dark:bg-gray-200 rounded-lg">
                 <div className="flex items-center justify-between font-semibold capitalize dark:text-gray-700">
                     <span>{title}</span>
                 </div>
@@ -26,7 +23,7 @@ const Card = ({ title, body, author, time }) => {
                         {time}
                     </p>
                 </div>
-            </a>
+            </div>
         </div>
     );
 };

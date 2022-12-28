@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@inertiajs/inertia-react";
 import {
     AiOutlineHome,
     AiOutlineRead,
-    AiOutlineClockCircle,
+    AiOutlineBars,
     AiOutlineUser,
 } from "react-icons/ai";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
@@ -39,7 +39,7 @@ const Sidebar = ({ auth }) => {
                 >
                     <li className="lg:mt-3 px-2 lg:p-2 text-blue-600 dark:text-blue-300 rounded-lg">
                         <Link
-                            to="/admin"
+                            href={route("admin.index")}
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
                             <AiOutlineHome className="h-5 w-5" />
@@ -52,7 +52,7 @@ const Sidebar = ({ auth }) => {
 				rounded-lg"
                     >
                         <Link
-                            to="/admin/course"
+                            href={route("course.index")}
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
                             <AiOutlineRead className="h-5 w-5" />
@@ -65,11 +65,11 @@ const Sidebar = ({ auth }) => {
 				rounded-lg"
                     >
                         <Link
-                            to="/admin/period"
+                            href={route("category.index")}
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
-                            <AiOutlineClockCircle className="h-5 w-5" />
-                            <span className="text-xs lg:mt-2">Period</span>
+                            <AiOutlineBars className="h-5 w-5" />
+                            <span className="text-xs lg:mt-2">Category</span>
                         </Link>
                     </li>
                     <li
@@ -77,7 +77,7 @@ const Sidebar = ({ auth }) => {
 				rounded-lg"
                     >
                         <Link
-                            to="/admin/course"
+                            href={route("student.index")}
                             className=" flex gap-x-2 lg:flex-col items-center"
                         >
                             <AiOutlineUser className="h-5 w-5" />

@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Form extends Model
+class Transaction extends Model
 {
     use HasFactory;
-
-    protected $table = 'forms';
+    protected $table = 'transactions';
     protected $primaryKey = 'id';
     public $incrementing = false;
 }

@@ -2,28 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\CourseCategory;
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Course extends Model
+class CourseCategory extends Model
 {
     use HasFactory;
-
-    protected $table = 'courses';
+    protected $table = 'course_categories';
     protected $primaryKey = 'id';
     public $incrementing = false;
 
     protected $fillable = [
         'id',
-        'title',
-        'description',
-        'price',
-        'category_id'
+        'name',
+        'description'
     ];
 
-    public function category()
+    public function course()
     {
-        return $this->belongsTo(CourseCategory::class, 'category_id');
+        return $this->hasMany(Course::class, 'category_id');
     }
 }

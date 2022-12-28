@@ -1,48 +1,49 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { usePage, Link } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
 import InputSearch from "@/Components/Dashboard/InputSearch";
 import InputFilterId from "@/Components/Dashboard/InputFilterId";
 
-const Period = (props) => {
-    const periods = props.data;
-    const { from, to, total, next, prev } = props;
-    const [periodList, setPeriodList] = useState([]);
+const Category = (props) => {
+    const { categories } = usePage().props;
+    const { from, to, total, next_page_url, prev_page_url } = categories;
+    const [categoriesList, setCategoriesList] = useState([]);
     const [orderId, setOrderId] = useState("dsc");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setPeriodList(periods);
+        setCategoriesList(categories.data);
         setLoading(false);
     }, []);
 
     useEffect(() => {
         const searchQuery = search;
-        if (periods !== undefined) {
+        if (categories.data !== undefined) {
             if (orderId === "asc") {
-                setPeriodList(
-                    periods
+                setCategoriesList(
+                    categories.data
                         .sort((a, b) => (a.id > b.id ? 1 : -1))
-                        .filter((period) => {
+                        .filter((category) => {
                             return (
-                                period.name
+                                category.name
                                     .toLowerCase()
                                     .indexOf(searchQuery.toLowerCase()) !== -1
                             );
                         })
                 );
             } else if (orderId === "dsc") {
-                setPeriodList(
-                    periods
+                setCategoriesList(
+                    categories.data
                         .sort((a, b) => (a.id > b.id ? -1 : 1))
-                        .filter((period) => {
+                        .filter((category) => {
                             return (
-                                period.name
+                                category.name
                                     .toLowerCase()
                                     .indexOf(searchQuery.toLowerCase()) !== -1
                             );
@@ -53,33 +54,23 @@ const Period = (props) => {
     }, [orderId, search]);
 
     const handleDelete = (id) => {
-        if (confirm("Are you sure you want to delete this user?")) {
-            Inertia.delete(route("admin-period-delete", id));
-            setPeriodList(periodList.filter((period) => period.id !== id));
+        if (confirm("Are you sure you want to delete this category?")) {
+            Inertia.delete(route("category.destroy", id));
+            setCategoriesList(
+                categoriesList.filter((category) => category.id !== id)
+            );
         }
-    };
-
-    const rupiahFormat = (num) => {
-        let num_string = num.toString(),
-            rest_number = num_string.length % 3,
-            rupiah = num_string.substr(0, rest_number),
-            thousand = num_string.substr(rest_number).match(/\d{3}/g);
-        if (thousand) {
-            let separator = rest_number ? "." : "";
-            rupiah += separator + thousand.join(".");
-        }
-        return rupiah;
     };
 
     return (
-        <div>
-            <Header title="Period List" auth={props.auth} />
+        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
+            <Header title="Category List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between my-6">
                     <div className="w-2/3 flex flex-col lg:flex-row gap-x-2">
                         <InputSearch
                             handle={setSearch}
-                            searchName={"Period name"}
+                            searchName={"Category name"}
                         />
                         <div className="w-full lg:w-1/2  flex gap-x-2">
                             <InputFilterId
@@ -89,10 +80,10 @@ const Period = (props) => {
                         </div>
                     </div>
                     <Link
-                        to="/admin/period/add"
+                        href={route("category.create")}
                         className="mt-2 lg:mt-0 text-white text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-blue-500 hover:bg-blue-600 transition ease-linear duration-300"
                     >
-                        Add Period
+                        Add Category
                     </Link>
                 </div>
                 {loading ? (
@@ -109,13 +100,7 @@ const Period = (props) => {
                                         Name
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 hidden md:table-cell">
-                                        Time start
-                                    </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                        Time end
-                                    </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                                        Cost
+                                        Description
                                     </th>
                                     <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
                                         Action
@@ -123,35 +108,31 @@ const Period = (props) => {
                                 </tr>
                             </thead>
                             <tbody className="text-gray-600 dark:text-gray-100">
-                                {periodList !== undefined ? (
-                                    periodList.map((period, index) => (
-                                        <tr key={`period-${index}`}>
+                                {categoriesList !== undefined ? (
+                                    categoriesList.map((category, index) => (
+                                        <tr key={`category-${index}`}>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <p className="dark:text-gray-100">
-                                                    {period.id}
+                                                    {category.id}
                                                 </p>
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <p className="dark:text-gray-100">
-                                                    {period.name}
+                                                    {category.name}
                                                 </p>
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
                                                 <p className="dark:text-gray-100">
-                                                    {period.time_start}
+                                                    {category.description}
                                                 </p>
-                                            </td>
-                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                                {period.time_end}
-                                            </td>
-                                            <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                                <span>Rp.</span>{" "}
-                                                {rupiahFormat(period.cost)}
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <div className="flex flex-col md:flex-row items-center gap-2">
                                                     <Link
-                                                        to={`/admin/period/${period.id}`}
+                                                        href={route(
+                                                            "category.edit",
+                                                            category.id
+                                                        )}
                                                         className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-400 hover:bg-cyan-500 transition ease-linear duration-300"
                                                     >
                                                         <MdModeEdit />
@@ -159,7 +140,7 @@ const Period = (props) => {
                                                     <button
                                                         onClick={() =>
                                                             handleDelete(
-                                                                period.id
+                                                                category.id
                                                             )
                                                         }
                                                         className="p-1 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 transition ease-linear duration-300"
@@ -202,15 +183,15 @@ const Period = (props) => {
                         <Pagination
                             from={from}
                             to={to}
-                            next={next}
-                            prev={prev}
+                            next={next_page_url}
+                            prev={prev_page_url}
                             total={total}
                         />
                     </div>
                 )}
             </div>
-        </div>
+        </AuthenticatedLayout>
     );
 };
 
-export default Period;
+export default Category;

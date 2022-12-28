@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
+use App\Models\Course;
+use App\Models\CourseCategory;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +48,12 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('User/Home');
     })->name('dashboard');
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail')->middleware(['checkStatus:0']);
+        // Route::get('/form-registration', 'registrationUserDetailIndexActived')->name('register-user-detail-actived')->middleware(['checkStatus:1']);
+        Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail')->middleware(['checkStatus:0']);
+    });
 });
 
 /*------------------------------------------
@@ -53,22 +63,17 @@ All Admin Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'checkRole:admin'])->group(function () {
     // Dashboard
-    Route::controller(AdminController::class)->group(function () {
-        Route::get('/admin', 'index')->name('admin-dashboard');
+    Route::get('/admin', function () {
+        $course = Course::latest()->take(1)->get();
+        $category = CourseCategory::latest()->take(1)->get();
+        $student = User::latest()->take(1)->get();
+        return Inertia::render('Admin/Index', ['course' => $course, 'category' => $category, 'student' => $student]);
+    })->name('admin.index');
 
-        Route::get('/admin/course', 'index')->name('admin-course');
-        Route::get('/admin/course/add', 'index')->name('admin-course-add');
-        Route::post('/admin/course/add', 'storeCourse')->name('admin-course-post');
-        Route::get('/admin/course/{id}', 'index')->name('admin-course-edit');
-        Route::put('/admin/course/{id}', 'updateCourse')->name('admin-course-update');
-        Route::delete('/admin/course/{id}', 'destroyCourse')->name('admin-course-delete');
-
-        Route::get('/admin/period', 'index')->name('admin-period');
-        Route::get('/admin/period/add', 'index')->name('admin-period-add');
-        Route::post('/admin/period/add', 'storePeriod')->name('admin-period-post');
-        Route::get('/admin/period/{id}', 'index')->name('admin-period-edit');
-        Route::put('/admin/period/{id}', 'updatePeriod')->name('admin-period-update');
-        Route::delete('/admin/period/{id}', 'destroyPeriod')->name('admin-period-delete');
+    Route::prefix('/admin')->group(function () {
+        Route::resource('course', CourseController::class);
+        Route::resource('category', CategoryController::class);
+        Route::resource('student', StudentController::class);
     });
 });
 
@@ -77,7 +82,7 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
 Profile Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'checkStatus:1'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

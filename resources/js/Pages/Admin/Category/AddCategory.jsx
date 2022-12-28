@@ -1,26 +1,25 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useForm, usePage, Link } from "@inertiajs/inertia-react";
-const EditCourse = (props) => {
-    const { course, categories } = usePage().props;
-    const { data, setData, errors, put, wasSuccessful } = useForm({
-        title: course.title || "",
-        description: course.description || "",
-        price: course.price || "",
-        category_id: course.category_id || "",
+import { useForm, Link } from "@inertiajs/inertia-react";
+
+const AddCategory = (props) => {
+    const { data, setData, errors, post } = useForm({
+        id: "",
+        name: "",
+        description: "",
     });
 
     async function handleSubmit(e) {
         e.preventDefault();
-        put(route("course.update", course.id));
+        post(route("category.store"));
     }
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="py-4 mb-5 flex items-center justify-between">
                 <div className="flex flex-col capitalize text-3xl ">
-                    <span className="font-bold">Edit Course </span>
+                    <span className="font-bold">Add Category </span>
                 </div>
                 <Link
-                    href={route("course.index")}
+                    href={route("category.index")}
                     className="inline-flex justify-center py-1 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                 >
                     <p className="text-white ">Back</p>
@@ -30,47 +29,45 @@ const EditCourse = (props) => {
                 <div className="shadow overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
-                            <div className="col-span-6 sm:col-span-4">
+                            <div className="col-span-6 sm:col-span-2">
                                 <label
-                                    htmlFor="course_title"
+                                    htmlFor="category_id"
                                     className="block text-sm font-medium text-gray-700"
                                 >
-                                    Course name
+                                    Category ID
                                 </label>
                                 <input
                                     type="text"
-                                    name="course_title"
-                                    id="course_title"
-                                    autoComplete="given-name"
+                                    name="category_id"
+                                    id="category_id"
+                                    maxLength="2"
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
-                                        setData("title", e.target.value)
+                                        setData("id", e.target.value)
                                     }
                                 />
                                 <span className="text-xs text-red-600 font-thin">
-                                    {errors.title}
+                                    {errors.id}
                                 </span>
                             </div>
-
                             <div className="col-span-6 sm:col-span-4">
                                 <label
-                                    htmlFor="course_price"
+                                    htmlFor="category_name"
                                     className="block text-sm font-medium text-gray-700"
                                 >
-                                    Price
+                                    Category name
                                 </label>
                                 <input
-                                    type="number"
-                                    name="course_price"
-                                    id="course_price"
-                                    autoComplete="given-name"
+                                    type="text"
+                                    name="category_name"
+                                    id="category_name"
                                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md "
                                     onChange={(e) =>
-                                        setData("price", e.target.value)
+                                        setData("name", e.target.value)
                                     }
                                 />
                                 <span className="text-xs text-red-600 font-thin">
-                                    {errors.price}
+                                    {errors.name}
                                 </span>
                             </div>
 
@@ -91,33 +88,6 @@ const EditCourse = (props) => {
                                     {errors.description}
                                 </span>
                             </div>
-
-                            <div className="col-span-6 sm:col-span-4">
-                                <label
-                                    htmlFor="category_id"
-                                    className="block text-sm font-medium text-gray-700"
-                                >
-                                    Category
-                                </label>
-                                <select
-                                    id="category_id"
-                                    name="category_id"
-                                    autoComplete="category_id"
-                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    onChange={(e) =>
-                                        setData("category_id", e.target.value)
-                                    }
-                                >
-                                    {categories.map((category, index) => (
-                                        <option
-                                            value={category.id}
-                                            key={`option-category-${index}`}
-                                        >
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
                         </div>
                     </div>
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -134,4 +104,4 @@ const EditCourse = (props) => {
     );
 };
 
-export default EditCourse;
+export default AddCategory;
