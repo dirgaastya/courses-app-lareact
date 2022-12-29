@@ -28,10 +28,10 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
+
+Route::get('/course', [CourseController::class, 'guestIndex'])->name('course.list');
 
 Route::get(
     "/redirectAuthenticatedUsers",
@@ -51,7 +51,6 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail')->middleware(['checkStatus:0']);
-        // Route::get('/form-registration', 'registrationUserDetailIndexActived')->name('register-user-detail-actived')->middleware(['checkStatus:1']);
         Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail')->middleware(['checkStatus:0']);
     });
 });
