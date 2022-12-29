@@ -7,7 +7,6 @@ import moment from "moment-timezone";
 
 const Index = (props) => {
     const { courses, categories } = usePage().props;
-    console.log(courses);
 
     const getArrCategory = () => {
         let result = [];
@@ -37,7 +36,7 @@ const Index = (props) => {
                         </h1>
                         <div className="lg:flex">
                             <div className="relative mt-4 md:mt-12 space-y-4 sm:w-10/12 md:w-2/3 lg:ml-0 sm:mx-auto text-center lg:text-left lg:mr-auto lg:w-7/12">
-                                <p className="sm:text-lg text-gray-700 dark:text-gray-300 lg:w-11/12">
+                                <p className="sm:text-lg text-gray-700 dark:text-gray-300 ">
                                     Start, switch, or advance your career with
                                     more than 5,400 courses, Professional
                                     Certificates, and degrees from world-class
@@ -77,13 +76,13 @@ const Index = (props) => {
                     </div>
                 </div>
                 <div className="mt-16 w-full border-b border-gray-600"></div>
-                <div className="max-w-7xl lg:px-10 mx-auto relative dark:bg-gray-900 min-h-screen">
+                <div className="max-w-7xl px-2 md:px-4 lg:px-10 mx-auto relative dark:bg-gray-900 min-h-screen">
                     <div className="py-3 border-b border-gray-600">
                         <h3 className="text-lg font-semibold leading-relaxed dark:text-white">
                             Course List
                         </h3>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-3 md:gap-x-4 py-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-6 md:gap-x-4 md:gap-y-4 py-4">
                         {courses.data.map((course, index) => (
                             <div className="group" key={`course-${index}`}>
                                 <div className="text-left focus:outline-none">
