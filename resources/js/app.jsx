@@ -9,6 +9,11 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Hesecourse";
 
+const cleanApp = () => {
+    document.getElementById("app").removeAttribute("data-page");
+};
+document.addEventListener("inertia:finish", cleanApp);
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
@@ -21,6 +26,6 @@ createInertiaApp({
 
         root.render(<App {...props} />);
     },
-});
+}).then(cleanApp);
 
 InertiaProgress.init({ color: "#4B5563" });

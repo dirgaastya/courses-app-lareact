@@ -31,7 +31,10 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/course', [CourseController::class, 'guestIndex'])->name('course.list');
+Route::controller(CourseController::class)->group(function () {
+    Route::get('/course', 'courseIndex')->name('course.list');
+    Route::get('/course/{id}', 'courseDetail')->name('course.detail');
+});
 
 Route::get(
     "/redirectAuthenticatedUsers",

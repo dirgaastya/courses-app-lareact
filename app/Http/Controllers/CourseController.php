@@ -24,7 +24,8 @@ class CourseController extends Controller
         return Inertia::render('Admin/Course/Course', ['courses' => $courses, 'categories' => $categories]);
     }
 
-    public function guestIndex(){
+    public function courseIndex()
+    {
         $courses = Course::with('category')->latest()->paginate(10);
         $categories = CourseCategory::all();
         return Inertia::render('Guest/Course/Index', ['courses' => $courses, 'categories' => $categories]);
@@ -81,9 +82,10 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function courseDetail($id)
     {
-        //
+        $course = Course::with('category')->find($id);
+        return Inertia::render('Guest/Course/CourseDetail', ['course' => $course]);
     }
 
     /**

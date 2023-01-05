@@ -1,0 +1,27 @@
+[
+    {
+        "icon": "FaCertificate",
+        "title": "certificate",
+        "desc": "Get an industry standard certificate after completing this class."
+    },
+    {
+        "icon": "FaClipboardCheck",
+        "title": "Code Review",
+        "desc": "The code that you work on will be comprehensively reviewd by Reviewers."
+    },
+    {
+        "icon": "FaRegFileAlt",
+        "title": "Submission",
+        "desc": "Put your technical skills to the test by working on submission assignments."
+    },
+    {
+        "icon": "FaRegFolderOpen",
+        "title": "Tutorial Mode",
+        "desc": "Electronic reading material is presented in an easy-to-understand language."
+    },
+    {
+        "icon": "FaRegComments",
+        "title": "Discussion Forum",
+        "desc": "Discuss study material with other students."
+    }
+]
