@@ -1,13 +1,15 @@
 import AuthenticatedHomeLayout from "@/Layouts/AuthenticatedHomeLayout";
 import { usePage, Link } from "@inertiajs/inertia-react";
 import { useEffect } from "react";
-import { Navigation, Autoplay } from "swiper";
+import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { RupiahFormat } from "@/Function/Main";
 import moment from "moment-timezone";
 import CourseHeading from "@/Components/Guest/CourseHeading";
-import Card from "@/Components/Guest/Card";
-import data from "@/api/benefits";
+import BenefitCard from "@/Components/Guest/BenefitCard";
+import SpecificationCard from "@/Components/Guest/SpecificationCard";
+import benefits from "@/api/benefits";
+import specifications from "@/api/specifications";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -34,7 +36,7 @@ const CourseDetail = (props) => {
                                 {course.title}
                             </h3>
                             <div className="text-sm md:text-md leading-loose font-light">
-                                <p className="mb-2 text-gray-300">
+                                <p className="mb-2 text-gray-800 dark:text-gray-300 ">
                                     Dalam seri ini kita akan belajar bagaimana
                                     mengunakan Next.js 13 sebagai frontend dari
                                     laravel backend yang menggunakan laravel
@@ -66,7 +68,7 @@ const CourseDetail = (props) => {
                         </p>
                         <Link
                             href="#"
-                            className="py-2 px-4 border border-green-800 bg-green-500 rounded-xl text-center text-white font-semibold "
+                            className="py-2 px-4  bg-green-500 rounded-xl text-center text-white font-semibold hover:bg-green-600 transition duration-300 ease-in "
                         >
                             Buy Course
                         </Link>
@@ -75,28 +77,50 @@ const CourseDetail = (props) => {
                 <CourseHeading title="what will you get" />
                 <div className="py-6 px-4">
                     <Swiper
-                        modules={[Navigation, Autoplay]}
-                        autoplay={true}
+                        modules={[Navigation]}
                         spaceBetween={50}
                         slidesPerView={1.25}
                         draggable={true}
                         breakpoints={{
                             768: {
                                 width: 768,
-                                slidesPerView: 2,
+                                slidesPerView: 2.5,
                             },
                         }}
                     >
-                        {data.map((data, index) => (
-                            <SwiperSlide key={`card-${index}`}>
-                                <Card
-                                    icon={data.icon}
-                                    title={data.title}
-                                    desc={data.desc}
+                        {benefits.map((benefit, index) => (
+                            <SwiperSlide key={`BenefitCard-${index}`}>
+                                <BenefitCard
+                                    icon={benefit.icon}
+                                    title={benefit.title}
+                                    desc={benefit.desc}
                                 />
                             </SwiperSlide>
                         ))}
                     </Swiper>
+                </div>
+
+                <CourseHeading title="learning tools" />
+                <div className="py-6 px-4">
+                    <div className="mb-3 text-gray-800 dark:text-white">
+                        <h4 className="font-semibold ">
+                            Minimum device specifications
+                        </h4>
+                        <p className="text-sm dark:text-gray-300">
+                            This class requires the following device
+                            specifications:
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-y-3 gap-x-2">
+                        {specifications.map((specification, index) => (
+                            <SpecificationCard
+                                icon={specification.icon}
+                                title={specification.title}
+                                desc={specification.desc}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </AuthenticatedHomeLayout>
