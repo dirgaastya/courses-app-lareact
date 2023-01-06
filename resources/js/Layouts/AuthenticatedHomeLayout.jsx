@@ -11,7 +11,9 @@ const AuthenticatedHomeLayout = (props) => {
     return (
         <div className={`${darkMode ? "dark" : null}`}>
             <Navbar auth={auth} handleDarkMode={handleDarkMode} />
-            {children}
+            <div className="bg-white relative pt-10 pb-10 lg:pt-10 dark:bg-gray-900 transition ease-in-out duration-500">
+                {children}
+            </div>
             <Footer />
         </div>
     );

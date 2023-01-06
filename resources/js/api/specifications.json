@@ -1,0 +1,22 @@
+[
+    {
+        "icon": "FaMemory",
+        "title": "ram",
+        "desc": "2GB (Recommended 8GB)"
+    },
+    {
+        "icon": "FaDesktop",
+        "title": "Screen",
+        "desc": "1024 x 768 (Full HD 1920 x 1080 recommended)"
+    },
+    {
+        "icon": "FaLaptopCode",
+        "title": "Operating System",
+        "desc": "Windows, Linux, MacOS"
+    },
+    {
+        "icon": "FaCogs",
+        "title": "Processor",
+        "desc": "Intel Core i3 (Recommend Core i5 and above)"
+    }
+]
