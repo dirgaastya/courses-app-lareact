@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "@inertiajs/inertia-react";
 import {
     AiOutlineHome,
     AiOutlineRead,
     AiOutlineBars,
     AiOutlineUser,
+    AiOutlineCreditCard,
 } from "react-icons/ai";
+import SideNavLink from "@/Components/Dashboard/SideNavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 
 const Sidebar = ({ auth }) => {
@@ -37,52 +38,52 @@ const Sidebar = ({ auth }) => {
                         showingNavigationDropdown ? "hidden" : "flex"
                     } items-center lg:block lg:mt-2 text-gray-700 dark:text-gray-400 capitalize`}
                 >
-                    <li className="lg:mt-3 px-2 lg:p-2 text-blue-600 dark:text-blue-300 rounded-lg">
-                        <Link
+                    <li className="lg:mt-3 px-2 lg:p-2">
+                        <SideNavLink
                             href={route("admin.index")}
-                            className=" flex gap-x-2 lg:flex-col items-center"
+                            active={route().current("admin.index")}
                         >
                             <AiOutlineHome className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Dashboard</span>
-                        </Link>
+                        </SideNavLink>
                     </li>
 
-                    <li
-                        className="lg:mt-3 px-2 hover:text-blue-600 dark-hover:text-blue-300
-				rounded-lg"
-                    >
-                        <Link
+                    <li className="lg:mt-3 px-2 lg:p-2">
+                        <SideNavLink
                             href={route("course.index")}
-                            className=" flex gap-x-2 lg:flex-col items-center"
+                            active={route().current("course.index")}
                         >
                             <AiOutlineRead className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Course</span>
-                        </Link>
+                        </SideNavLink>
                     </li>
 
-                    <li
-                        className="lg:mt-3 px-2 hover:text-blue-600 dark-hover:text-blue-300
-				rounded-lg"
-                    >
-                        <Link
+                    <li className="lg:mt-3 px-2 lg:p-2">
+                        <SideNavLink
                             href={route("category.index")}
-                            className=" flex gap-x-2 lg:flex-col items-center"
+                            active={route().current("category.index")}
                         >
                             <AiOutlineBars className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Category</span>
-                        </Link>
+                        </SideNavLink>
                     </li>
-                    <li
-                        className="lg:mt-3 px-2 hover:text-blue-600 dark-hover:text-blue-300
-				rounded-lg"
-                    >
-                        <Link
+                    <li className="lg:mt-3 px-2 lg:p-2">
+                        <SideNavLink
                             href={route("student.index")}
-                            className=" flex gap-x-2 lg:flex-col items-center"
+                            active={route().current("student.index")}
                         >
                             <AiOutlineUser className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Student</span>
-                        </Link>
+                        </SideNavLink>
+                    </li>
+                    <li className="lg:mt-3 px-2 lg:p-2">
+                        <SideNavLink
+                            href={route("transaction.index")}
+                            active={route().current("transaction.index")}
+                        >
+                            <AiOutlineCreditCard className="h-5 w-5" />
+                            <span className="text-xs lg:mt-2">Transaction</span>
+                        </SideNavLink>
                     </li>
                 </ul>
                 <div className="-mr-2 flex items-center lg:hidden">

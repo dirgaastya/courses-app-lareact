@@ -1,6 +1,6 @@
 import AuthenticatedHomeLayout from "@/Layouts/AuthenticatedHomeLayout";
 import { usePage, Link } from "@inertiajs/inertia-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { RupiahFormat } from "@/Function/Main";
@@ -8,6 +8,7 @@ import moment from "moment-timezone";
 import CourseHeading from "@/Components/Guest/CourseHeading";
 import BenefitCard from "@/Components/Guest/BenefitCard";
 import SpecificationCard from "@/Components/Guest/SpecificationCard";
+import TransactionModal from "@/Components/Guest/TransactionModal";
 import benefits from "@/api/benefits";
 import specifications from "@/api/specifications";
 import "swiper/css";
@@ -15,9 +16,15 @@ import "swiper/css/navigation";
 
 const CourseDetail = (props) => {
     const { course } = usePage().props;
+    const [paymentModal, setPaymentModal] = useState(false);
     useEffect(() => {
         document.title = `Hesecourse | ${course.title}`;
     }, []);
+
+    const handleModal = () => {
+        setPaymentModal(!paymentModal);
+    };
+
     return (
         <AuthenticatedHomeLayout auth={props.auth}>
             <div className="max-w-7xl px-2 md:px-4 lg:px-10 mx-auto relative min-h-screen">
@@ -66,12 +73,12 @@ const CourseDetail = (props) => {
                         <p className="md:mb-3 text-center text-lg font-semibold dark:text-white">
                             Rp. {RupiahFormat(course.price)}
                         </p>
-                        <Link
-                            href="#"
+                        <button
+                            onClick={handleModal}
                             className="py-2 px-4  bg-green-500 rounded-xl text-center text-white font-semibold hover:bg-green-600 transition duration-300 ease-in "
                         >
                             Buy Course
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <CourseHeading title="what will you get" />
@@ -118,11 +125,21 @@ const CourseDetail = (props) => {
                                 icon={specification.icon}
                                 title={specification.title}
                                 desc={specification.desc}
+                                key={`specification-${index}`}
                             />
                         ))}
                     </div>
                 </div>
             </div>
+            {paymentModal ? (
+                <TransactionModal
+                    handleModal={handleModal}
+                    title={course.title}
+                    price={course.price}
+                    courseID={course.id}
+                    userID={props.auth.user.id}
+                />
+            ) : null}
         </AuthenticatedHomeLayout>
     );
 };

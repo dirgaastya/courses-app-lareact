@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RedirectAuthenticatedUsersControllers;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -40,6 +41,7 @@ Route::get(
     "/redirectAuthenticatedUsers",
     [RedirectAuthenticatedUsersControllers::class, "home"]
 )->middleware(['auth']);
+Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction.store')->middleware(['auth']);
 
 /*------------------------------------------
 --------------------------------------------
@@ -76,6 +78,9 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
         Route::resource('course', CourseController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('student', StudentController::class);
+        Route::controller(TransactionController::class)->group(function () {
+            Route::get('/transaction', 'index')->name('transaction.index');
+        });
     });
 });
 
