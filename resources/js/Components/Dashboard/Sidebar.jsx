@@ -78,8 +78,8 @@ const Sidebar = ({ auth }) => {
                     </li>
                     <li className="lg:mt-3 px-2 lg:p-2">
                         <SideNavLink
-                            href={route("transaction.index")}
-                            active={route().current("transaction.index")}
+                            href={route("admin.transaction.index")}
+                            active={route().current("admin.transaction.index")}
                         >
                             <AiOutlineCreditCard className="h-5 w-5" />
                             <span className="text-xs lg:mt-2">Transaction</span>

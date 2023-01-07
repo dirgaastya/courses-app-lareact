@@ -22,16 +22,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,6 +39,7 @@ class TransactionController extends Controller
 
         $user_id = $request->user_id;
         $user_detail_id = UserDetail::where('user_id', $user_id)->get(['id'])->toArray();
+
         $transaction = new Transaction();
         $transaction->id = $id;
         $transaction->user_detail_id = $user_detail_id[0]['id'];
@@ -64,30 +55,8 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $transaction = Transaction::find($id);
+        return Inertia::render('Admin/Transaction/TransactionDetail', ['transaction' => $transaction]);
     }
 
     /**
@@ -98,6 +67,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Transaction::find($id)->delete();
     }
 }

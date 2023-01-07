@@ -79,7 +79,9 @@ Route::middleware(['auth', 'checkRole:admin'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('student', StudentController::class);
         Route::controller(TransactionController::class)->group(function () {
-            Route::get('/transaction', 'index')->name('transaction.index');
+            Route::get('/transaction', 'index')->name('admin.transaction.index');
+            Route::get('/transaction/{id}', 'show')->name('admin.transaction.show');
+            Route::delete('/transaction/{id}', 'destroy')->name('admin.transaction.delete');
         });
     });
 });
