@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Course;
+use App\Models\UserDetail;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\CourseCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
@@ -84,8 +87,18 @@ class CourseController extends Controller
      */
     public function courseDetail($id)
     {
+        if (Auth::check() && Auth::user()->status) {
+            $user_id = Auth::id();
+            $user_detail_id = UserDetail::where('user_id', $user_id)->get(['id'])->toArray();
+            $isBuy = Transaction::where([
+                ['course_id', '=', $id],
+                ['user_detail_id', '=', $user_detail_id[0]['id']],
+            ])->get();
+        } else {
+            $isBuy = [];
+        }
         $course = Course::with('category')->find($id);
-        return Inertia::render('Guest/Course/CourseDetail', ['course' => $course]);
+        return Inertia::render('Guest/Course/CourseDetail', ['course' => $course, 'isBuy' => $isBuy]);
     }
 
     /**

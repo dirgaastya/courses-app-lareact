@@ -8,6 +8,7 @@ const TransactionModal = (props) => {
     async function handleSubmit(e) {
         e.preventDefault();
         post(route("transaction.store"));
+        props.handleModal();
     }
     return (
         <>

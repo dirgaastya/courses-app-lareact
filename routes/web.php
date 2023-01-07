@@ -41,7 +41,7 @@ Route::get(
     "/redirectAuthenticatedUsers",
     [RedirectAuthenticatedUsersControllers::class, "home"]
 )->middleware(['auth']);
-Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction.store')->middleware(['auth']);
+Route::post('/transaction', [TransactionController::class, 'store'])->name('transaction.store')->middleware(['auth', 'checkRole:user', 'checkStatus:1']);
 
 /*------------------------------------------
 --------------------------------------------

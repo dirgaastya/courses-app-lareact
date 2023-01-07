@@ -42,7 +42,7 @@ class TransactionController extends Controller
         $config = [
             'table' => 'transactions',
             'length' => 8,
-            'prefix' => 'TRX' . date('m')
+            'prefix' => 'T' . date('ym')
         ];
 
         $id = IdGenerator::generate($config);

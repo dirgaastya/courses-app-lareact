@@ -1,5 +1,5 @@
 import AuthenticatedHomeLayout from "@/Layouts/AuthenticatedHomeLayout";
-import { usePage, Link } from "@inertiajs/inertia-react";
+import { usePage, Link, useForm } from "@inertiajs/inertia-react";
 import { useEffect, useState } from "react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,14 +15,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const CourseDetail = (props) => {
-    const { course } = usePage().props;
+    const { course, isBuy } = usePage().props;
     const [paymentModal, setPaymentModal] = useState(false);
+    const { get } = useForm();
     useEffect(() => {
         document.title = `Hesecourse | ${course.title}`;
     }, []);
 
     const handleModal = () => {
-        setPaymentModal(!paymentModal);
+        if (props.auth.user !== null) return setPaymentModal(!paymentModal);
+        get(route("login"));
     };
 
     return (
@@ -70,15 +72,23 @@ const CourseDetail = (props) => {
                         </div>
                     </div>
                     <div className="w-full lg:w-32 flex justify-between items-center lg:flex-col lg:justify-start ">
-                        <p className="md:mb-3 text-center text-lg font-semibold dark:text-white">
-                            Rp. {RupiahFormat(course.price)}
-                        </p>
-                        <button
-                            onClick={handleModal}
-                            className="py-2 px-4  bg-green-500 rounded-xl text-center text-white font-semibold hover:bg-green-600 transition duration-300 ease-in "
-                        >
-                            Buy Course
-                        </button>
+                        {isBuy.length != 0 ? (
+                            <p className="md:mb-3 text-center text-lg font-semibold dark:text-white">
+                                You aleardy buy this course.
+                            </p>
+                        ) : (
+                            <div>
+                                <p className="md:mb-3 text-center text-lg font-semibold dark:text-white">
+                                    Rp. {RupiahFormat(course.price)}
+                                </p>
+                                <button
+                                    onClick={handleModal}
+                                    className="py-2 px-4  bg-green-500 rounded-xl text-center text-white font-semibold hover:bg-green-600 transition duration-300 ease-in "
+                                >
+                                    Buy Course
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <CourseHeading title="what will you get" />
