@@ -119,7 +119,7 @@ const Student = (props) => {
                                                         student.created_at,
                                                         "Asia/Jakarta"
                                                     )
-                                                    .fromNow()}
+                                                    .format("d MMMM YYYY")}
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
                                                 <span
@@ -127,7 +127,7 @@ const Student = (props) => {
                                                         student.status === 1
                                                             ? "border-green-400 bg-green-200 text-green-400"
                                                             : "border-red-400 bg-red-200 text-red-400"
-                                                    } rounded-2xl text-sm`}
+                                                    } rounded-2xl text-xs`}
                                                 >
                                                     {student.status === 1
                                                         ? "Actived"
