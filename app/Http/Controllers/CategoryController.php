@@ -50,7 +50,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
-        return Redirect::route('course.index');
+        return redirect()->route('category.index')->with('success', 'Category has been added sucessfully!');
     }
 
     /**
@@ -92,7 +92,7 @@ class CategoryController extends Controller
         ]);
 
         CourseCategory::find($id)->update($request->all());
-        return Redirect::route('category.index');
+        return redirect()->route('category.index')->with('success', 'Category has been updated sucessfully!');
     }
 
     /**

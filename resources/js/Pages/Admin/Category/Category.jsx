@@ -8,6 +8,7 @@ import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
 import InputSearch from "@/Components/Dashboard/InputSearch";
 import InputFilterId from "@/Components/Dashboard/InputFilterId";
+import AlertSuccess from "@/Components/AlertSuccess";
 
 const Category = (props) => {
     const { categories } = usePage().props;
@@ -66,6 +67,9 @@ const Category = (props) => {
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <Header title="Category List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
+                {props.flash.message && (
+                    <AlertSuccess message={props.flash.message} />
+                )}
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between my-6">
                     <div className="w-2/3 flex flex-col lg:flex-row gap-x-2">
                         <InputSearch

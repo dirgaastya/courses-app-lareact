@@ -76,7 +76,7 @@ class CourseController extends Controller
         $courses->price = $request->price;
         $courses->category_id = $request->category_id;
         $courses->save();
-        return Redirect::route('course.index');
+        return redirect()->route('course.index')->with('success', 'Course has been added sucessfully!');
     }
 
     /**
@@ -131,7 +131,7 @@ class CourseController extends Controller
         ]);
 
         Course::find($id)->update($request->all());
-        return Redirect::route('course.index');
+        return redirect()->route('course.index')->with('success', 'Course has been updated sucessfully!');
     }
 
     /**

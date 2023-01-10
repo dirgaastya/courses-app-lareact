@@ -8,6 +8,8 @@ import Loading from "@/Components/Loading";
 import Header from "@/Components/Dashboard/Header";
 import InputSearch from "@/Components/Dashboard/InputSearch";
 import InputFilterId from "@/Components/Dashboard/InputFilterId";
+import AlertSuccess from "@/Components/AlertSuccess";
+import { RupiahFormat } from "@/Function/Main";
 
 const Course = (props) => {
     const { courses, categories } = usePage().props;
@@ -76,21 +78,13 @@ const Course = (props) => {
         }
     };
 
-    const rupiahFormat = (num) => {
-        let num_string = num.toString(),
-            rest_number = num_string.length % 3,
-            rupiah = num_string.substr(0, rest_number),
-            thousand = num_string.substr(rest_number).match(/\d{3}/g);
-        if (thousand) {
-            let separator = rest_number ? "." : "";
-            rupiah += separator + thousand.join(".");
-        }
-        return rupiah;
-    };
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <Header title="Course List" auth={props.auth} />
             <div className="py-2 mb-3 md:py-4 md:mb-5 flex flex-col lg:items-center">
+                {props.flash.message && (
+                    <AlertSuccess message={props.flash.message} />
+                )}
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between my-6">
                     <div className="flex flex-col lg:flex-row gap-x-2">
                         <InputSearch
@@ -189,7 +183,7 @@ const Course = (props) => {
                                                 {course.description}
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
-                                                Rp. {rupiahFormat(course.price)}
+                                                Rp. {RupiahFormat(course.price)}
                                             </td>
                                             <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                                                 <div className="flex flex-col md:flex-row items-center gap-2">
