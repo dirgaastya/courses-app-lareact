@@ -26,13 +26,13 @@ const StudentDetail = (props) => {
 
             <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
-                    <p className="font-semibold text-lg">Information</p>
+                    <p className="font-semibold text-lg mb-3">Information</p>
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 md:px-4 md:col-span-3">
                             <p className="block text-sm font-medium text-gray-700">
                                 Student ID
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md bg-gray-100/40 rounded-md">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.id}
                                 </span>
@@ -42,7 +42,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Status
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md bg-gray-100/40 rounded-md">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.user.status === 1
                                         ? "Actived"
@@ -54,7 +54,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Full Name
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md bg-gray-100/40 rounded-md">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.name}
                                 </span>
@@ -64,7 +64,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Email
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400 ">
                                 <span className="leading-relaxed">
                                     {student.user.email}
                                 </span>
@@ -74,7 +74,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Birthplace
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.birthplace}
                                 </span>
@@ -84,7 +84,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Birthdate
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {birthdate}
                                 </span>
@@ -94,7 +94,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 City
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.city}
                                 </span>
@@ -104,7 +104,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Phone Number
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.phone_number}
                                 </span>
@@ -114,7 +114,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 Job
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.job}
                                 </span>
@@ -124,7 +124,7 @@ const StudentDetail = (props) => {
                             <p className="block text-sm font-medium text-gray-700">
                                 education
                             </p>
-                            <div className="py-1 px-2 block w-full shadow-md border-gray-300 rounded-md bg-gray-100/40 ">
+                            <div className="py-1 px-2 block w-full border-b border-indigo-400">
                                 <span className="leading-relaxed">
                                     {student.education}
                                 </span>
