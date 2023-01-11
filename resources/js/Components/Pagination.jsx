@@ -7,7 +7,7 @@ const Pagination = ({ from, to, total, next, prev }) => {
     }
     return (
         <div className="w-full my-4 flex justify-between items-center">
-            <p className="text-sm font-thin">
+            <p className="text-sm font-thin dark:text-gray-400">
                 Showing <span className="font-semibold">{from}</span> to{" "}
                 <span className="font-semibold">{to}</span> of{" "}
                 <span className="font-semibold">{total}</span> results
@@ -16,12 +16,12 @@ const Pagination = ({ from, to, total, next, prev }) => {
                 {prev !== null ? (
                     <Link
                         href={`?page=${getLinkIndex(prev)}`}
-                        className="text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 hover:bg-gray-300/80 transition ease-linear duration-300"
+                        className="text-gray-800 dark:text-gray-600 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 dark:bg-gray-300 hover:bg-gray-300/80 dark:hover:bg-gray-400 dark:hover:text-gray-300 transition ease-linear duration-200"
                     >
                         Prev
                     </Link>
                 ) : (
-                    <p className="cursor-not-allowed text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
+                    <p className="cursor-not-allowed text-gray-800 dark:text-gray-400 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
                         Prev
                     </p>
                 )}
@@ -29,12 +29,12 @@ const Pagination = ({ from, to, total, next, prev }) => {
                 {next !== null ? (
                     <Link
                         href={`?page=${getLinkIndex(next)}`}
-                        className="text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 hover:bg-gray-300/80 transition ease-linear duration-300"
+                        className="text-gray-800 dark:text-gray-600 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/50 dark:bg-gray-300 hover:bg-gray-300/80 dark:hover:bg-gray-400 dark:hover:text-gray-300 transition ease-linear duration-200"
                     >
                         Next
                     </Link>
                 ) : (
-                    <p className="cursor-not-allowed text-gray-800 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
+                    <p className="cursor-not-allowed text-gray-800 dark:text-gray-400 text-center font-semibold py-2 px-4 border border-transparent shadow-sm text-sm rounded-md  bg-gray-300/10  transition ease-linear duration-300">
                         Next
                     </p>
                 )}

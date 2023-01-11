@@ -1,19 +1,37 @@
+import { useEffect, useState } from "react";
 import Dropdown from "@/Components/Dropdown";
 import { MdAdminPanelSettings } from "react-icons/md";
+import DarkModeToggle from "@/Components/DarkModeToggle";
 
 const Header = ({ title, auth }) => {
+    const [dark, setDark] = useState(true);
+    const handleDark = () => {
+        setDark(!dark);
+    };
+
+    useEffect(() => {
+        const el = document.getElementById("dark");
+        if (dark) {
+            el.classList.add("dark");
+            el.classList.add("bg-gray-800");
+        } else {
+            el.classList.remove("dark");
+            el.classList.remove("bg-gray-800");
+        }
+    }, [dark]);
+
     return (
         <div className="flex justify-between text-3xl py-5">
-            <span className="font-bold">{title} </span>
-            <div>
-                <div className="hidden lg:flex sm:items-center sm:ml-6">
-                    <div className="ml-3 relative">
+            <span className="font-bold dark:text-gray-100">{title} </span>
+            <div className="rounded-md flex items-center space-x-3">
+                <div className="rounded-md hidden lg:flex sm:items-center sm:ml-6">
+                    <div className="ml-3 relative dark:bg-gray-800 rounded-md">
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <span className="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                        className="inline-flex rounded-md items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 dark:bg-transparent"
                                     >
                                         <MdAdminPanelSettings className="w-5 h-5" />
 
@@ -35,10 +53,10 @@ const Header = ({ title, auth }) => {
 
                             <Dropdown.Content>
                                 <Dropdown.Link>
-                                    <div className="font-medium text-gray-800">
+                                    <div className="font-medium text-gray-800 dark:text-gray-100">
                                         {auth.user.name}
                                     </div>
-                                    <div className="font-medium text-sm text-gray-500">
+                                    <div className="font-medium text-sm text-gray-500 dark:text-gray-400">
                                         {auth.user.email}
                                     </div>
                                 </Dropdown.Link>
@@ -56,6 +74,11 @@ const Header = ({ title, auth }) => {
                         </Dropdown>
                     </div>
                 </div>
+                <DarkModeToggle
+                    handleDarkMode={handleDark}
+                    darkMode={dark}
+                    setDarkMode={setDark}
+                />
             </div>
         </div>
     );

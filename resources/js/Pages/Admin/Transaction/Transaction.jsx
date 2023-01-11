@@ -11,7 +11,6 @@ import moment from "moment-timezone";
 
 const Transaction = (props) => {
     const { transactions } = usePage().props;
-    console.log(transactions);
     const [transactionLists, setTransactionLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,37 +35,37 @@ const Transaction = (props) => {
                     <Loading />
                 ) : (
                     <div className="w-full">
-                        <table className="w-full px-3 md:px-8 md:rounded-md md:shadow-md text-left md:overflow-hidden overflow-x-auto bg-white">
+                        <table className="w-full px-3 md:px-8 md:rounded-md md:shadow-md text-left md:overflow-hidden overflow-x-auto bg-white dark:bg-gray-800">
                             <thead>
-                                <tr className="text-gray-600">
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                <tr className="text-gray-600 dark:text-gray-100">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-900">
                                         ID
                                     </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-900">
                                         Course Name
                                     </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-900">
                                         User
                                     </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-900">
                                         Purchased at
                                     </th>
-                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                    <th className="font-bold px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-900">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="text-gray-600 dark:text-gray-100">
+                            <tbody className="text-gray-600 dark:text-gray-200">
                                 {transactionLists !== undefined ? (
                                     transactionLists.map(
                                         (transaction, index) => (
                                             <tr key={`transaction-${index}`}>
-                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                                     <p className="dark:text-gray-100">
                                                         {transaction.id}
                                                     </p>
                                                 </td>
-                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                                     <p className="dark:text-gray-100">
                                                         {
                                                             transaction.course
@@ -74,10 +73,10 @@ const Transaction = (props) => {
                                                         }
                                                     </p>
                                                 </td>
-                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
+                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900 ">
                                                     {transaction.user.name}
                                                 </td>
-                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
+                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900 ">
                                                     {moment
                                                         .tz(
                                                             transaction.created_at,
@@ -85,7 +84,7 @@ const Transaction = (props) => {
                                                         )
                                                         .format("d MMMM YYYY")}
                                                 </td>
-                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                                <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                                     <div className="flex flex-col md:flex-row items-center gap-2">
                                                         <Link
                                                             href={route(
@@ -113,25 +112,25 @@ const Transaction = (props) => {
                                     )
                                 ) : (
                                     <tr>
-                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                             <p className="dark:text-gray-100">
                                                 No data available
                                             </p>
                                         </td>
-                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                             <p className="dark:text-gray-100">
                                                 No data available
                                             </p>
                                         </td>
-                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">
+                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900 md:table-cell hidden">
                                             <p className="dark:text-gray-100">
                                                 No data available
                                             </p>
                                         </td>
-                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 ">
+                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900 ">
                                             No data available
                                         </td>
-                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                                        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-900">
                                             <div className="flex flex-col md:flex-row items-center gap-2">
                                                 <p>No data available</p>
                                             </div>

@@ -1,17 +1,11 @@
 import Sidebar from "@/Components/Dashboard/Sidebar";
 import SidebarUser from "@/Components/Dashboard/SidebarUser";
-import { useState } from "react";
 
 export default function Authenticated({ auth, header, children }) {
-    const [darkMode, setDarkMode] = useState(true);
-    const handleDarkMode = (state) => {
-        setDarkMode(!state);
-    };
     return (
         <div
-            className={`${
-                darkMode ? "dark bg-gray-800" : null
-            } min-h-screen w-full lg:flex overflow-hidden select-none`}
+            id="dark"
+            className={`dark bg-gray-800 min-h-screen w-full lg:flex overflow-hidden select-none transition duration-500 ease-in-out`}
         >
             {auth.user.role === "admin" ? (
                 <Sidebar auth={auth} />

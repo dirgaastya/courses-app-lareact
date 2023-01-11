@@ -17,7 +17,7 @@ const Sidebar = ({ auth }) => {
             <nav
                 className={`w-full lg:w-24 ${
                     showingNavigationDropdown ? "block" : "flex"
-                } justify-between lg:flex-col lg:justify-start items-center bg-white dark:bg-gray-800 py-2 px-4 md:px-6 lg:px-8 lg:py-4 `}
+                } justify-between lg:flex-col lg:justify-start items-center bg-white dark:bg-gray-800 py-2 px-4 md:px-6 lg:px-8 lg:py-4 transition duration-500 ease-in-out`}
             >
                 <a
                     href="/"

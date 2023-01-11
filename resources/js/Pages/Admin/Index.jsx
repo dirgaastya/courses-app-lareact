@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Card from "@/Components/Dashboard/Card";
 import RecentListCard from "@/Components/Dashboard/RecenListCard";
 import moment from "moment-timezone";
+import Header from "@/Components/Dashboard/Header";
 
 const Index = (props) => {
     const { course, category, student } = usePage().props;
@@ -10,10 +11,16 @@ const Index = (props) => {
         <>
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
                 <div>
-                    <div className="flex flex-col capitalize text-3xl">
-                        <span className="font-semibold">hello,</span>
-                        <span>{props.auth.user.name}!</span>
-                    </div>
+                    <Header
+                        title={
+                            <div className="flex flex-col capitalize text-3xl">
+                                <span className="font-semibold">hello,</span>
+                                <span>{props.auth.user.name}!</span>
+                            </div>
+                        }
+                        auth={props.auth}
+                    />
+
                     {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                         <div>
                             <RecentListCard title={"Course"} to={"course"}>
