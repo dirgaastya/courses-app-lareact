@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use Inertia\Inertia;
 use App\Models\Course;
 use App\Models\UserDetail;
@@ -85,19 +86,20 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function courseDetail($id)
+    public function courseDetail($slug)
     {
+        $course_id = Course::where('slug', $slug)->get(['id'])->toArray();
+        $course = Course::with('category')->find($course_id[0]['id']);
         if (Auth::check() && Auth::user()->status) {
             $user_id = Auth::id();
             $user_detail_id = UserDetail::where('user_id', $user_id)->get(['id'])->toArray();
             $isBuy = Transaction::where([
-                ['course_id', '=', $id],
+                ['course_id', '=', $course_id[0]['id']],
                 ['user_detail_id', '=', $user_detail_id[0]['id']],
             ])->get();
         } else {
             $isBuy = [];
         }
-        $course = Course::with('category')->find($id);
         return Inertia::render('Guest/Course/CourseDetail', ['course' => $course, 'isBuy' => $isBuy]);
     }
 

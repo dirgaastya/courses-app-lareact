@@ -52,7 +52,7 @@ const Index = (props) => {
                                     </div>
                                 </div>
                                 <Link
-                                    href={route("course.detail", course.id)}
+                                    href={route("course.detail", course.slug)}
                                     className="mt-2.5 lg:mt-3 "
                                 >
                                     <div>

@@ -7,7 +7,7 @@ const SideNavLink = ({ href, active, children }) => {
             className={
                 active
                     ? "flex gap-x-2 lg:flex-col items-center text-blue-600 dark:text-blue-300"
-                    : "flex gap-x-2 lg:flex-col items-center hover:text-blue-600 dark-hover:text-blue-300"
+                    : "flex gap-x-2 lg:flex-col items-center hover:text-blue-600 dark:hover:text-blue-300"
             }
         >
             {children}

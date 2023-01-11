@@ -58,6 +58,12 @@ Route::middleware(['auth', 'checkRole:user'])->group(function () {
         Route::get('/form-registration', 'registrationUserDetailIndex')->name('register-user-detail')->middleware(['checkStatus:0']);
         Route::post('/form-registration', 'storeUserDetail')->name('add-user-detail')->middleware(['checkStatus:0']);
     });
+
+
+    Route::prefix('/dashboard')->group(function () {
+        Route::get('course', [CourseController::class, 'dashboard'])->name('course.dashboard');
+        Route::get('transaction', [TransactionController::class, 'dashboard'])->name('transaction.dashboard');
+    });
 });
 
 /*------------------------------------------

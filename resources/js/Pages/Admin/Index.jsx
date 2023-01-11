@@ -14,7 +14,7 @@ const Index = (props) => {
                         <span className="font-semibold">hello,</span>
                         <span>{props.auth.user.name}!</span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                    {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                         <div>
                             <RecentListCard title={"Course"} to={"course"}>
                                 <Card
@@ -97,7 +97,7 @@ const Index = (props) => {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </AuthenticatedLayout>
         </>
